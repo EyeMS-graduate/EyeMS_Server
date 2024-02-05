@@ -1,14 +1,15 @@
 package com.example.eyeserver.Login.Domain
 
 import jakarta.persistence.*
+import lombok.Data
 
 
 @Entity
+@Table(name = "user")
 class User (
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var userId : String,
+    val userId : String,
     @Column(name = "password")
-    var password : String,
+    val password : String,
 
 )
