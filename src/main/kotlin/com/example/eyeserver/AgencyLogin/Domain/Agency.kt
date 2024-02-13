@@ -1,15 +1,20 @@
-package com.example.eyeserver.Login.Domain
+package com.example.eyeserver.AgencyLogin.Domain
 
 import jakarta.persistence.*
-import lombok.Data
+
 
 
 @Entity
-@Table(name = "user")
-class User (
+@Table(name = "agency")
+class Agency (
+
     @Id
     val userId : String,
     @Column(name = "password")
     val password : String,
 
+
 )
+{
+
+}
