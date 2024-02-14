@@ -1,7 +1,6 @@
-package com.example.eyeserver.AgencyLogin.DTO
+package com.example.eyeserver.agencyLogin.dto
 
 
-import com.example.eyeserver.AgencyLogin.Role.Role
 import java.util.*
 
 class TokenResponseDTO (

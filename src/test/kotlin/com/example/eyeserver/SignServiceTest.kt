@@ -1,10 +1,8 @@
 package com.example.eyeserver
 
-import com.example.eyeserver.AgencyLogin.DTO.AgencyDTO
-import com.example.eyeserver.AgencyLogin.Repository.AgencyRepository
-import com.example.eyeserver.AgencyLogin.Role.Role
-import com.example.eyeserver.AgencyLogin.Service.AgencyService
-import org.junit.jupiter.api.Assertions.assertNotEquals
+import com.example.eyeserver.agencyLogin.dto.AgencyDTO
+import com.example.eyeserver.agencyLogin.repository.AgencyRepository
+import com.example.eyeserver.agencyLogin.service.AgencyService
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance

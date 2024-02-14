@@ -1,17 +1,14 @@
-package com.example.eyeserver.Security
+package com.example.eyeserver.config
 
-import com.example.eyeserver.AgencyLogin.Role.Role
+import com.example.eyeserver.Security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer
-import org.springframework.security.config.http.SessionCreationPolicy
 
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import kotlin.jvm.Throws
 
@@ -38,19 +35,9 @@ class SecurityConfig (
                     .requestMatchers(AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/signUp")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/signIn")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/error")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/unity/**")).permitAll()
                     .anyRequest().authenticated()
             }
-
-
-            //.formLogin{login -> login.loginPage("/signIn")
-            //    .usernameParameter("userId")
-            //    .passwordParameter("password")
-            //    .failureForwardUrl("/test")
-            //    .permitAll()
-            //}.logout{logout -> logout.logoutUrl("/push")
-            //   .permitAll()
-            //}
 
         return http.build()
     }

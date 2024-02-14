@@ -1,8 +1,8 @@
-package com.example.eyeserver.AgencyLogin.Controller
+package com.example.eyeserver.agencyLogin.controller
 
-import com.example.eyeserver.AgencyLogin.DTO.TokenResponseDTO
-import com.example.eyeserver.AgencyLogin.DTO.AgencyDTO
-import com.example.eyeserver.AgencyLogin.Service.AgencyService
+import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
+import com.example.eyeserver.agencyLogin.dto.AgencyDTO
+import com.example.eyeserver.agencyLogin.service.AgencyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class LoginController (
+class AgencyLoginController (
     @Autowired private val agencyService: AgencyService
 ){
 

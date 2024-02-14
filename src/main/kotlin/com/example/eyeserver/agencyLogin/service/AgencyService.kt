@@ -1,9 +1,9 @@
-package com.example.eyeserver.AgencyLogin.Service
+package com.example.eyeserver.agencyLogin.service
 
-import com.example.eyeserver.AgencyLogin.DTO.TokenResponseDTO
-import com.example.eyeserver.AgencyLogin.DTO.AgencyDTO
-import com.example.eyeserver.AgencyLogin.Domain.Agency
-import com.example.eyeserver.AgencyLogin.Repository.AgencyRepository
+import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
+import com.example.eyeserver.agencyLogin.dto.AgencyDTO
+import com.example.eyeserver.agencyLogin.domain.Agency
+import com.example.eyeserver.agencyLogin.repository.AgencyRepository
 import com.example.eyeserver.Security.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder

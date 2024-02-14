@@ -1,4 +1,4 @@
-package com.example.eyeserver.AgencyLogin.Domain
+package com.example.eyeserver.agencyLogin.domain
 
 import jakarta.persistence.*
 

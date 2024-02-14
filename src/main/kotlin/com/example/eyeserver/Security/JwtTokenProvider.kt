@@ -1,8 +1,7 @@
 package com.example.eyeserver.Security
 
 
-import com.example.eyeserver.AgencyLogin.DTO.TokenResponseDTO
-import com.example.eyeserver.AgencyLogin.Role.Role
+import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys

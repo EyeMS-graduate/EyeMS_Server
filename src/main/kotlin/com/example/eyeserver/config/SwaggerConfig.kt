@@ -1,4 +1,4 @@
-package com.example.eyeserver.AgencyLogin.Controller
+package com.example.eyeserver.config
 
 import org.springframework.context.annotation.Configuration
 

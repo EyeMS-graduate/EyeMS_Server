@@ -1,6 +1,6 @@
-package com.example.eyeserver.AgencyLogin.Repository
+package com.example.eyeserver.agencyLogin.repository
 
-import com.example.eyeserver.AgencyLogin.Domain.Agency
+import com.example.eyeserver.agencyLogin.domain.Agency
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
