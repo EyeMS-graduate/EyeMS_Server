@@ -1,11 +1,10 @@
-package com.example.eyeserver.Security
+package com.example.eyeserver.security
 
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletRequest
 import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.context.annotation.Bean
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.CrossOrigin

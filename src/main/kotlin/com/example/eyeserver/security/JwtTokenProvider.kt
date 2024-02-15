@@ -1,8 +1,9 @@
-package com.example.eyeserver.Security
+package com.example.eyeserver.security
 
 
 import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
 import com.example.eyeserver.agencyLogin.role.Role
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -66,23 +67,22 @@ class JwtTokenProvider (
                 .after(Date())
 
         } catch (e: Exception) {
-            print(e)
+            println(e)
             false
         }
     }
 
-    fun userPrimaryKey(jwtToken: String): String {
+    fun userPrimaryKey(jwtToken: String): Claims {
         return Jwts.parserBuilder()
             .setSigningKey(secretKey).build()
             .parseClaimsJws(jwtToken)
             .body
-            .subject
     }
 
     @Transactional
     fun userAuthentication(jwtToken: String): Authentication {
         val userDetails = userDetailService
-            .loadUserByUsername(userPrimaryKey(jwtToken))
+            .loadUserByUsername(userPrimaryKey(jwtToken).subject)
 
         return UsernamePasswordAuthenticationToken(
             userDetails, userDetails.password, userDetails.authorities
@@ -93,6 +93,6 @@ class JwtTokenProvider (
 
     companion object {
         private const val TOKEN_VALID_MILLISECOND = 1000L * 60 * 60
-        private const val TOKEN_HEADER_NAME = "X-AUTH-TOKEN"
+        private const val TOKEN_HEADER_NAME = "Authorization"
     }
 }

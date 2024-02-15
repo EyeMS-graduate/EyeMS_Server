@@ -1,8 +1,8 @@
 package com.example.eyeserver.userLogin.domain
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
+import com.example.eyeserver.agencyLogin.domain.Agency
+import com.example.eyeserver.agencyLogin.role.Role
+import jakarta.persistence.*
 
 @Entity
 class Users (
@@ -12,12 +12,22 @@ class Users (
     val userId: String,
 
     var password: String,
-    var agency: String,
-    var status: String,
+    var status : String?,
     var name: String,
+
+    @Column(name = "agency_name")
+    var agencyName : String,
     var birth: String,
-    var gender: String,
     var phone: String,
-    var glasses: String,
+    var email: String,
+    var address: String,
+    var gender: Boolean,
+    @Column(name = "first_visit")
+    var firstVisit: Boolean,
+    var glasses: Boolean,
+
+    @ManyToOne
+    @JoinColumn(name = "agency")
+    var agency: Agency? = null
 
 )

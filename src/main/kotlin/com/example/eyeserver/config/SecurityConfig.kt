@@ -1,7 +1,7 @@
 package com.example.eyeserver.config
 
-import com.example.eyeserver.Security.JwtAuthenticationFilter
-import com.example.eyeserver.Security.JwtTokenProvider
+import com.example.eyeserver.security.JwtAuthenticationFilter
+import com.example.eyeserver.security.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -34,7 +34,7 @@ class SecurityConfig (
                     .requestMatchers(AntPathRequestMatcher("/swagger-ui/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/agency/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/user/**")).hasRole("Manager")
+                    .requestMatchers(AntPathRequestMatcher("/user/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/unity/**")).hasRole("User")
                     .anyRequest().authenticated()
             }

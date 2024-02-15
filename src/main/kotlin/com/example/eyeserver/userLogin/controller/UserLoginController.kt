@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 class UserLoginController (val loginService: LoginService) {
 
     @PostMapping("/login")
-    fun login(@RequestBody loginDTO: LoginDTO): ResponseEntity<String> {
+    fun login(@RequestBody loginDTO: LoginDTO): ResponseEntity<TokenResponseDTO> {
 
-        return ResponseEntity.ok().body("OK")
+        return ResponseEntity.ok().body(loginService.login(loginDTO))
 
     }
 }

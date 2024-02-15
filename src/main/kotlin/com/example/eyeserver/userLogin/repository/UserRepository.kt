@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface LoginRepository : JpaRepository<Users, String>{
+interface UserRepository : JpaRepository<Users, String>{
 
     fun findByUserId(id: String?): Users?
-
+    fun existsByUserId(id : String) : Boolean
 }

@@ -1,6 +1,6 @@
 package com.example.eyeserver.agencyLogin.service
 
-import com.example.eyeserver.Security.JwtTokenProvider
+import com.example.eyeserver.security.JwtTokenProvider
 import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
 
 import com.example.eyeserver.agencyLogin.domain.Agency
