@@ -1,6 +1,6 @@
 package com.example.eyeserver
 
-import com.example.eyeserver.agencyLogin.dto.AgencyDTO
+import com.example.eyeserver.agencyLogin.dto.AgencySignInDTO
 import com.example.eyeserver.agencyLogin.repository.AgencyRepository
 import com.example.eyeserver.agencyLogin.service.AgencyService
 
@@ -25,7 +25,7 @@ internal class SignServiceTest(
     fun passwordTesting() {
 
         //given
-        val userDTO = AgencyDTO(
+        val userDTO = AgencySignInDTO(
             userId = "123",
             password = "3q4mf9ao8eirghj",
 
