@@ -18,26 +18,6 @@ class LoginService (
     val jwtTokenProvider: JwtTokenProvider
 ){
 
-    @Transactional
-    fun login(loginDTO: LoginDTO): TokenResponseDTO? {
-        val id: String = loginDTO.id
-        val pw: String = loginDTO.pw
 
-        val users: Users? = loginRepository.findByUserId(id)
-
-
-        if(users === null || !passwordEncoder.matches(pw, users.password)){
-            return TokenResponseDTO(
-                token = "",
-                utcExpirationDate = Date(),
-                )
-        }
-
-        val jwtInfo = jwtTokenProvider.createToken(users.userId)
-        return TokenResponseDTO(
-            token = jwtInfo.token,
-            utcExpirationDate = jwtInfo.utcExpirationDate,
-            )
-    }
 
 }

@@ -5,6 +5,7 @@ import com.example.eyeserver.agencyLogin.dto.AgencyDTO
 import com.example.eyeserver.agencyLogin.domain.Agency
 import com.example.eyeserver.agencyLogin.repository.AgencyRepository
 import com.example.eyeserver.Security.JwtTokenProvider
+import com.example.eyeserver.agencyLogin.role.Role
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -27,7 +28,7 @@ class AgencyService(
                 utcExpirationDate = Date(),
             )
         }
-        val jwtInfo = jwtTokenProvider.createToken(user.userId)
+        val jwtInfo = jwtTokenProvider.createToken(user.userId, user.role, user.agencyName)
         return TokenResponseDTO(
             token = jwtInfo.token,
             utcExpirationDate = jwtInfo.utcExpirationDate,
@@ -36,10 +37,10 @@ class AgencyService(
     }
 
     fun signUp(agencyDTO: AgencyDTO) : AgencyDTO{
-        val user = Agency(agencyDTO.userId, passwordEncoder.encode(agencyDTO.password))
+        val user = Agency(agencyDTO.userId, passwordEncoder.encode(agencyDTO.password),agencyDTO.agency, Role.Manager)
         userRepository.save(user)
 
-        return AgencyDTO(user.userId, passwordEncoder.encode(user.password))
+        return AgencyDTO(user.userId, passwordEncoder.encode(user.password), user.agencyName, user.role)
     }
 
 }

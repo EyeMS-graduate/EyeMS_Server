@@ -2,6 +2,7 @@ package com.example.eyeserver.Security
 
 
 import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
+import com.example.eyeserver.agencyLogin.role.Role
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -24,10 +25,14 @@ class JwtTokenProvider (
     val secretKey: Key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
 
     fun createToken(
-        primaryKey: String
-    ): TokenResponseDTO {
-        val claims = Jwts.claims().setSubject(primaryKey)
-        claims.put("userId", primaryKey)
+        userId : String,
+        role : Role,
+        agency : String,
+        ): TokenResponseDTO {
+        val claims = Jwts.claims().setSubject(role.name)
+        claims["userId"] = userId
+        claims["agency"] = agency
+
         val now = Date()
         val utcExpirationDate = Date(now.time + TOKEN_VALID_MILLISECOND)
 
