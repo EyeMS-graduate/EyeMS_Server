@@ -39,8 +39,7 @@ class UserService(
             address = signUpUserDTO.address,
             gender = gender,
             glasses = glasses,
-            firstVisit = true,
-            role = Role.User
+            visited = false,
         ))
         return true
     }

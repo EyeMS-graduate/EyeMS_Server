@@ -17,26 +17,27 @@ class UserSignUpController (
     private val jwtTokenProvider: JwtTokenProvider,
     private val userService: UserService
 ){
-    @PostMapping("/addUser")
+    @PostMapping("/adduser")
     fun addUser(httpServletRequest: HttpServletRequest, @RequestBody signUpUserDTO: SignUpUserDTO) : ResponseEntity<String>{
 
         val token = jwtTokenProvider.resolveToken(httpServletRequest)
-        print(token.toString())
+        println(token.toString())
 
         if(token == null || !token.startsWith("Bearer ")){
             return ResponseEntity.badRequest().body("Invalid token")
         }
 
         val jwtToken = token.split(" ")[1].trim()
+        println(jwtToken)
 
         if(!jwtTokenProvider.validateToken(jwtToken)){
             return ResponseEntity.badRequest().body("Invalid token")
         }
 
-        val userId = jwtTokenProvider.userPrimaryKey(jwtToken)["userId"].toString()
-
-        if(userId == signUpUserDTO.userId){
-            return ResponseEntity.badRequest().body("Invalid token")
+        val role = jwtTokenProvider.userPrimaryKey(jwtToken).subject
+        println(role)
+        if(role != "Manager"){
+            return ResponseEntity.badRequest().body("님 매니저 아님")
         }
 
         if(!userService.addUser(signUpUserDTO, jwtTokenProvider.userPrimaryKey(jwtToken)["agency"].toString())){

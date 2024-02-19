@@ -13,11 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
-import java.nio.charset.CodingErrorAction
-import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.util.Date
-import kotlin.io.encoding.Base64
 
 
 @Component
@@ -25,20 +22,22 @@ class JwtTokenProvider (
     private val userDetailService: UserDetailsService
 ){
 
-    val secretKey : Key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
+
+    val secretKey: Key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
 
     fun createToken(
-        primaryKey: String,
-        agencyName : String,
+        userId : String,
         role : Role,
-    ): TokenResponseDTO {
-        val claims = Jwts.claims().setSubject(primaryKey)
-        claims["userId"] = primaryKey
-        claims["agencyName"] = agencyName
-        claims["role"] = role
-
+        agency : String,
+        ): TokenResponseDTO {
+        val claims = Jwts.claims().setSubject(role.name)
+        claims["userId"] = userId
+        claims["agency"] = agency
+        println(secretKey)
+        println("----------------------------")
         val now = Date()
         val utcExpirationDate = Date(now.time + TOKEN_VALID_MILLISECOND)
+
         return TokenResponseDTO(
             token = Jwts.builder()
                 .setClaims(claims)
@@ -57,9 +56,9 @@ class JwtTokenProvider (
 
     //유효성 + 만료일자 확인
     fun validateToken(jwtToken: String): Boolean {
+        println(secretKey)
         return try {
-            println(secretKey.toString())
-
+            //val token = jwtToken.substring(7)
             val claimsJws = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
@@ -71,23 +70,17 @@ class JwtTokenProvider (
                 .after(Date())
 
         } catch (e: Exception) {
-            print(e)
+            println(e)
             false
         }
     }
 
     fun userPrimaryKey(jwtToken: String): Claims {
-        val token = jwtToken.substring(7)
         return Jwts.parserBuilder()
             .setSigningKey(secretKey).build()
-            .parseClaimsJws(token)
+            .parseClaimsJws(jwtToken)
             .body
-
     }
-
-
-
-
 
     @Transactional
     fun userAuthentication(jwtToken: String): Authentication {

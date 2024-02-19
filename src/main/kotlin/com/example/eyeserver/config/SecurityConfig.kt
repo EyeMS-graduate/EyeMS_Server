@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import kotlin.jvm.Throws
 
@@ -34,10 +33,8 @@ class SecurityConfig (
                 authorizeRequests
                     .requestMatchers(AntPathRequestMatcher("/swagger-ui/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/signUp")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/signIn")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/unity/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/user/**")).hasRole("Manager")
+                    .requestMatchers(AntPathRequestMatcher("/agency/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/user/**")).permitAll()
                     .anyRequest().authenticated()
             }
             .formLogin { formLogin -> formLogin.disable() }

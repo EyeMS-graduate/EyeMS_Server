@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.filter.GenericFilterBean
 
-
+@CrossOrigin(origins = ["http://localhost:3000"])
 @Component
 class JwtAuthenticationFilter (
     private val jwtTokenProvider: JwtTokenProvider
