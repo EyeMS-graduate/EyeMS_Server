@@ -2,6 +2,7 @@ package com.example.eyeserver.agencyLogin.controller
 
 import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
 import com.example.eyeserver.agencyLogin.dto.AgencyDTO
+import com.example.eyeserver.agencyLogin.dto.AgencySignInDTO
 import com.example.eyeserver.agencyLogin.service.AgencyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -22,10 +23,8 @@ class AgencyLoginController (
     }
 
     @PostMapping("/signIn")
-    fun signIn(@RequestBody agencyDTO: AgencyDTO) : ResponseEntity<TokenResponseDTO>{
-
-        return ResponseEntity.ok().body(agencyService.signIn(agencyDTO))
-
+    fun signIn(@RequestBody agencySignInDTO: AgencySignInDTO) : ResponseEntity<TokenResponseDTO>{
+        return ResponseEntity.ok().body(agencyService.signIn(agencySignInDTO))
     }
 
     @GetMapping("/test")

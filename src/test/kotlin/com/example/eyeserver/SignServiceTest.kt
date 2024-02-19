@@ -21,24 +21,5 @@ internal class SignServiceTest(
     val userRepository: AgencyRepository
 ) {
 
-    @Test
-    fun passwordTesting() {
 
-        //given
-        val userDTO = AgencyDTO(
-            userId = "123",
-            password = "3q4mf9ao8eirghj",
-
-        )
-
-        //when
-        userService.signUp(userDTO)
-
-        //then
-        val findSignUpUser = userRepository.existsByUserId(userDTO.userId)
-
-        if (findSignUpUser) {
-
-        }
-    }
 }

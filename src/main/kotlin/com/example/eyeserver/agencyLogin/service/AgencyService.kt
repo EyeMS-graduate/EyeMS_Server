@@ -4,7 +4,9 @@ import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
 import com.example.eyeserver.agencyLogin.dto.AgencyDTO
 import com.example.eyeserver.agencyLogin.domain.Agency
 import com.example.eyeserver.agencyLogin.repository.AgencyRepository
-import com.example.eyeserver.Security.JwtTokenProvider
+import com.example.eyeserver.security.JwtTokenProvider
+import com.example.eyeserver.agencyLogin.dto.AgencySignInDTO
+import com.example.eyeserver.agencyLogin.role.Role
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -16,10 +18,11 @@ class AgencyService(
     @Autowired private val passwordEncoder: PasswordEncoder,
     @Autowired private val jwtTokenProvider: JwtTokenProvider
 ){
-    fun signIn(agencyDTO: AgencyDTO) : TokenResponseDTO{
+    fun signIn(agencySignInDTO : AgencySignInDTO) : TokenResponseDTO{
 
-        val user = userRepository.findByUserId(agencyDTO.userId)
-        if(!passwordEncoder.matches(agencyDTO.password, user.password)){
+        val user = userRepository.findByUserId(agencySignInDTO.userId)
+
+        if(!passwordEncoder.matches(agencySignInDTO.password, user.password)){
             print("비밀번호 불일치")
 
             return TokenResponseDTO(
@@ -27,19 +30,22 @@ class AgencyService(
                 utcExpirationDate = Date(),
             )
         }
-        val jwtInfo = jwtTokenProvider.createToken(user.userId)
+
+        val jwtInfo = jwtTokenProvider.createToken(user.userId, user.agencyName, user.role)
+
+        print(jwtTokenProvider.userPrimaryKey(jwtToken = jwtInfo.token))
+
         return TokenResponseDTO(
             token = jwtInfo.token,
             utcExpirationDate = jwtInfo.utcExpirationDate,
-
         )
     }
 
     fun signUp(agencyDTO: AgencyDTO) : AgencyDTO{
-        val user = Agency(agencyDTO.userId, passwordEncoder.encode(agencyDTO.password))
+        val user = Agency(agencyDTO.userId, passwordEncoder.encode(agencyDTO.password), agencyDTO.name, agencyDTO.agencyName, agencyDTO.phone, Role.Manager)
         userRepository.save(user)
 
-        return AgencyDTO(user.userId, passwordEncoder.encode(user.password))
+        return AgencyDTO(user.userId, passwordEncoder.encode(user.password), user.name, user.agencyName, user.phone)
     }
 
 }

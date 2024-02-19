@@ -1,7 +1,9 @@
-package com.example.eyeserver.Security
+package com.example.eyeserver.security
 
 
 import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
+import com.example.eyeserver.agencyLogin.role.Role
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -11,8 +13,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
+import java.nio.charset.CodingErrorAction
+import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.util.Date
+import kotlin.io.encoding.Base64
 
 
 @Component
@@ -20,17 +25,20 @@ class JwtTokenProvider (
     private val userDetailService: UserDetailsService
 ){
 
-
-    val secretKey: Key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
+    val secretKey : Key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
 
     fun createToken(
-        primaryKey: String
+        primaryKey: String,
+        agencyName : String,
+        role : Role,
     ): TokenResponseDTO {
         val claims = Jwts.claims().setSubject(primaryKey)
-        claims.put("userId", primaryKey)
+        claims["userId"] = primaryKey
+        claims["agencyName"] = agencyName
+        claims["role"] = role
+
         val now = Date()
         val utcExpirationDate = Date(now.time + TOKEN_VALID_MILLISECOND)
-
         return TokenResponseDTO(
             token = Jwts.builder()
                 .setClaims(claims)
@@ -50,6 +58,8 @@ class JwtTokenProvider (
     //유효성 + 만료일자 확인
     fun validateToken(jwtToken: String): Boolean {
         return try {
+            println(secretKey.toString())
+
             val claimsJws = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
@@ -66,18 +76,23 @@ class JwtTokenProvider (
         }
     }
 
-    fun userPrimaryKey(jwtToken: String): String {
+    fun userPrimaryKey(jwtToken: String): Claims {
+        val token = jwtToken.substring(7)
         return Jwts.parserBuilder()
             .setSigningKey(secretKey).build()
-            .parseClaimsJws(jwtToken)
+            .parseClaimsJws(token)
             .body
-            .subject
+
     }
+
+
+
+
 
     @Transactional
     fun userAuthentication(jwtToken: String): Authentication {
         val userDetails = userDetailService
-            .loadUserByUsername(userPrimaryKey(jwtToken))
+            .loadUserByUsername(userPrimaryKey(jwtToken).subject)
 
         return UsernamePasswordAuthenticationToken(
             userDetails, userDetails.password, userDetails.authorities
@@ -88,6 +103,6 @@ class JwtTokenProvider (
 
     companion object {
         private const val TOKEN_VALID_MILLISECOND = 1000L * 60 * 60
-        private const val TOKEN_HEADER_NAME = "X-AUTH-TOKEN"
+        private const val TOKEN_HEADER_NAME = "Authorization"
     }
 }
