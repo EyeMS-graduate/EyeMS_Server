@@ -34,7 +34,8 @@ class UserSignUpController (
             return ResponseEntity.badRequest().body("Invalid token")
         }
 
-        val role = jwtTokenProvider.userPrimaryKey(jwtToken)["role"].toString()
+        val role = jwtTokenProvider.userPrimaryKey(jwtToken).subject
+        println(role)
         if(role != "Manager"){
             return ResponseEntity.badRequest().body("님 매니저 아님")
         }

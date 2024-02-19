@@ -33,7 +33,8 @@ class JwtTokenProvider (
         val claims = Jwts.claims().setSubject(role.name)
         claims["userId"] = userId
         claims["agency"] = agency
-
+        println(secretKey)
+        println("----------------------------")
         val now = Date()
         val utcExpirationDate = Date(now.time + TOKEN_VALID_MILLISECOND)
 
@@ -55,7 +56,9 @@ class JwtTokenProvider (
 
     //유효성 + 만료일자 확인
     fun validateToken(jwtToken: String): Boolean {
+        println(secretKey)
         return try {
+            //val token = jwtToken.substring(7)
             val claimsJws = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
