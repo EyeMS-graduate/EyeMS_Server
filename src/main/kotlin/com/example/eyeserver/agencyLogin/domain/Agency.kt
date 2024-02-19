@@ -12,14 +12,16 @@ import jakarta.persistence.*
 class Agency (
 
     @Id
-    @Column(name = "agency_id")
-    val agencyId : String,
+    val userId : String,
+    @Column(name = "password")
     val password : String,
     val name : String,
 
     @Column(name = "agency_name")
     val agencyName : String,
     val phone : String,
+
+    @Column(name = "role")
     val role : Role,
 
     @OneToMany(mappedBy = "agency", cascade = [CascadeType.ALL])

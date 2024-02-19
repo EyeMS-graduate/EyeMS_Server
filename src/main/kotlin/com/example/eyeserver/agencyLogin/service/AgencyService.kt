@@ -23,7 +23,7 @@ class AgencyService(
 ){
     fun signIn(agencySignInDTO : AgencySignInDTO) : TokenResponseDTO{
 
-        val user = userRepository.findByAgencyId(agencySignInDTO.userId)
+        val user = userRepository.findByUserId(agencySignInDTO.userId)
 
         if(!passwordEncoder.matches(agencySignInDTO.password, user.password)){
             print("비밀번호 불일치")
@@ -34,7 +34,7 @@ class AgencyService(
             )
         }
 
-        val jwtInfo = jwtTokenProvider.createToken(user.agencyId, user.role, user.agencyName)
+        val jwtInfo = jwtTokenProvider.createToken(user.userId, user.role, user.agencyName)
 
         print(jwtTokenProvider.userPrimaryKey(jwtToken = jwtInfo.token))
 
@@ -48,7 +48,7 @@ class AgencyService(
         val user = Agency(agencyDTO.userId, passwordEncoder.encode(agencyDTO.password), agencyDTO.name, agencyDTO.agencyName, agencyDTO.phone, Role.Manager)
         userRepository.save(user)
 
-        return AgencySignUpDTO(user.agencyId, passwordEncoder.encode(user.password), user.name, user.agencyName, user.phone)
+        return AgencySignUpDTO(user.userId, passwordEncoder.encode(user.password), user.name, user.agencyName, user.phone)
     }
 
 }

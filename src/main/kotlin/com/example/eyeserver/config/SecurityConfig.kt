@@ -35,6 +35,7 @@ class SecurityConfig (
                     .requestMatchers(AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/agency/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/user/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/unity/**")).hasRole("User")
                     .anyRequest().authenticated()
             }
             .formLogin { formLogin -> formLogin.disable() }
