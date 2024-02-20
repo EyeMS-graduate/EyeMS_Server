@@ -22,7 +22,6 @@ data class Users (
     var email: String,
     var address: String,
     var gender: Boolean,
-
     var visited: Boolean,
     var glasses: Boolean,
 

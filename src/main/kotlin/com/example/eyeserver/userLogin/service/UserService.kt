@@ -41,13 +41,10 @@ class UserService(
             address = signUpUserDTO.address,
             gender = gender,
             glasses = glasses,
-            visited = true,
             agency = agency,
+            visited = false
         ))
         return true
     }
-
-
-
 
 }

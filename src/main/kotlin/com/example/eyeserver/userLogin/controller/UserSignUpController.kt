@@ -33,7 +33,7 @@ class UserSignUpController (
         }
 
         val role = jwtTokenProvider.userPrimaryKey(jwtToken).subject
-
+      
         if(role != "Manager"){
             return ResponseEntity.badRequest().body("님 매니저 아님")
         }
@@ -45,8 +45,7 @@ class UserSignUpController (
 
         return ResponseEntity.ok("good")
     }
-
-
+    
     @GetMapping
     fun userList(httpServletRequest: HttpServletRequest) : ResponseEntity<String>{
         val token = jwtTokenProvider.resolveToken(httpServletRequest)

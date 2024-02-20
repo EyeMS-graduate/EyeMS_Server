@@ -28,9 +28,4 @@ class AgencyLoginController (
 
     }
 
-    @GetMapping("/test")
-    fun add() : String{
-        return "hello"
-    }
-
 }
