@@ -25,15 +25,21 @@ class LoginService (
         val id: String = loginRequestDTO.userId
         val pw: String = loginRequestDTO.password
 
-        val users: Users? = userRepository.findByUserId(id)
-
+        var users: Users? = userRepository.findByUserId(id)
 
         if(users === null || !passwordEncoder.matches(pw, users.password)){
             return null
         }
 
+        val visited: Boolean = users.visited
+
+        if (visited === false){
+            users.visited = true
+            userRepository.save(users)
+        }
+
         val jwtInfo = jwtTokenProvider.createToken(users.userId, Role.User, users.agencyName)
-        return LoginResponseDTO(jwtInfo.token, users.visited)
+        return LoginResponseDTO(jwtInfo.token, visited)
     }
 
 }

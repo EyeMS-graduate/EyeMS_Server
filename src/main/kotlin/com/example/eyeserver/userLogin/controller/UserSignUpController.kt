@@ -46,7 +46,7 @@ class UserSignUpController (
         return ResponseEntity.ok("good")
     }
     
-    @GetMapping
+    @GetMapping("userlist")
     fun userList(httpServletRequest: HttpServletRequest) : ResponseEntity<String>{
         val token = jwtTokenProvider.resolveToken(httpServletRequest)
 
