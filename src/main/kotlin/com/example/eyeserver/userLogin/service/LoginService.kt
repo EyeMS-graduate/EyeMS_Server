@@ -39,7 +39,7 @@ class LoginService (
         }
 
         val jwtInfo = jwtTokenProvider.createToken(users.userId, Role.User, users.agencyName)
-        return LoginResponseDTO(jwtInfo.token, users.visited)
+        return LoginResponseDTO(jwtInfo.token, visited)
     }
 
 }
