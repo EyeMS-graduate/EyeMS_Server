@@ -17,7 +17,7 @@ class UserSignUpController (
     private val jwtTokenProvider: JwtTokenProvider,
     private val userService: UserService
 ){
-    @PostMapping("/addUser")
+    @PostMapping("/adduser")
     fun addUser(httpServletRequest: HttpServletRequest, @RequestBody signUpUserDTO: SignUpUserDTO) : ResponseEntity<String>{
 
         val token = jwtTokenProvider.resolveToken(httpServletRequest)

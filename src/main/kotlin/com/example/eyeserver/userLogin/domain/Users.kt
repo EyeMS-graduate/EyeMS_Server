@@ -22,8 +22,8 @@ data class Users (
     var email: String,
     var address: String,
     var gender: Boolean,
-    @Column(name = "first_visit")
-    var firstVisit: Boolean,
+
+    var visited: Boolean,
     var glasses: Boolean,
 
     @ManyToOne

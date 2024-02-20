@@ -14,14 +14,14 @@ class AgencyLoginController (
     @Autowired private val agencyService: AgencyService
 ){
 
-    @PostMapping("/signUp")
+    @PostMapping("/signup")
     fun register(@RequestBody userDTO: AgencySignUpDTO) : AgencySignUpDTO{
         val user =  agencyService.signUp(userDTO)
         //test update commit
         return user
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/signin")
     fun signIn(@RequestBody agencySignInDTO: AgencySignInDTO) : ResponseEntity<TokenResponseDTO>{
 
         return ResponseEntity.ok().body(agencyService.signIn(agencySignInDTO))
