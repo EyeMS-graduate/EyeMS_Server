@@ -5,7 +5,7 @@ import com.example.eyeserver.agencyLogin.role.Role
 import jakarta.persistence.*
 
 @Entity
-class Users (
+data class Users (
 
     @Id
     @Column(name = "user_id")
@@ -27,6 +27,6 @@ class Users (
 
     @ManyToOne
     @JoinColumn(name = "agency")
-    var agency: Agency? = null
+    var agency: Agency,
 
 )

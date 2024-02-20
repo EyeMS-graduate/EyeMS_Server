@@ -17,6 +17,7 @@ class AgencyLoginController (
     @PostMapping("/signup")
     fun register(@RequestBody userDTO: AgencySignUpDTO) : AgencySignUpDTO{
         val user =  agencyService.signUp(userDTO)
+        //test update commit
         return user
     }
 
