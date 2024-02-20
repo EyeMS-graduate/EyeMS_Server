@@ -9,4 +9,5 @@ interface UserRepository : JpaRepository<Users, String>{
 
     fun findByUserId(id: String?): Users?
     fun existsByUserId(id : String) : Boolean
+
 }

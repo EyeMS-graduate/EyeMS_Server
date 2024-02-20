@@ -21,21 +21,19 @@ class UserSignUpController (
     fun addUser(httpServletRequest: HttpServletRequest, @RequestBody signUpUserDTO: SignUpUserDTO) : ResponseEntity<String>{
 
         val token = jwtTokenProvider.resolveToken(httpServletRequest)
-        println(token.toString())
 
         if(token == null || !token.startsWith("Bearer ")){
             return ResponseEntity.badRequest().body("Invalid token")
         }
 
         val jwtToken = token.split(" ")[1].trim()
-        println(jwtToken)
 
         if(!jwtTokenProvider.validateToken(jwtToken)){
             return ResponseEntity.badRequest().body("Invalid token")
         }
 
         val role = jwtTokenProvider.userPrimaryKey(jwtToken).subject
-        println(role)
+
         if(role != "Manager"){
             return ResponseEntity.badRequest().body("님 매니저 아님")
         }
@@ -46,5 +44,31 @@ class UserSignUpController (
 
 
         return ResponseEntity.ok("good")
+    }
+
+
+    @GetMapping
+    fun userList(httpServletRequest: HttpServletRequest) : ResponseEntity<String>{
+        val token = jwtTokenProvider.resolveToken(httpServletRequest)
+
+        if(token == null || !token.startsWith("Bearer ")){
+            return ResponseEntity.badRequest().body(null)
+        }
+
+        val jwtToken = token.split(" ")[1].trim()
+
+        if(!jwtTokenProvider.validateToken(jwtToken)){
+            return ResponseEntity.badRequest().body(null)
+        }
+
+        val role = jwtTokenProvider.userPrimaryKey(jwtToken).subject
+        val agencyId = jwtTokenProvider.userPrimaryKey(jwtToken)["userId"].toString()
+
+        if(role != "Manager"){
+            return ResponseEntity.badRequest().body(null)
+        }
+        //val userIdList = userService.userList(agencyId)
+
+        return ResponseEntity.ok("A")
     }
 }

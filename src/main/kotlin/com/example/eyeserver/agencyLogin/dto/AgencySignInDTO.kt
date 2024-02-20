@@ -2,7 +2,7 @@ package com.example.eyeserver.agencyLogin.dto
 
 
 class AgencySignInDTO (
-    val userId : String,
+    val agencyId : String,
     val password : String
 
 )

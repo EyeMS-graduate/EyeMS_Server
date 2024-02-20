@@ -12,7 +12,7 @@ import jakarta.persistence.*
 class Agency (
 
     @Id
-    val userId : String,
+    val agencyId : String,
     @Column(name = "password")
     val password : String,
     val name : String,

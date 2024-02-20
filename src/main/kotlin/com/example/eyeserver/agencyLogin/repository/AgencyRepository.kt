@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface AgencyRepository : JpaRepository<Agency, String> {
-    fun existsByUserId(userId : String) : Boolean
+    fun existsByAgencyId(agencyId : String) : Boolean
 
-    fun findByUserId(userId: String) : Agency
+    fun findByAgencyId(agencyId: String) : Agency
+    fun findByAgencyName(agencyName : String) : Agency
+
 }
