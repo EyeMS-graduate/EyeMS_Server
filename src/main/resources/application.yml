@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3307/agency
+    url: jdbc:mariadb://localhost:3308/eyems
     driver-class-name: org.mariadb.jdbc.Driver
-    username: nh
+    username: root
     password: 1234
   security:
     user:
