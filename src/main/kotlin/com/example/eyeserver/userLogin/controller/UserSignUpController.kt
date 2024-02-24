@@ -45,29 +45,5 @@ class UserSignUpController (
 
         return ResponseEntity.ok("good")
     }
-    
-    @GetMapping("userlist")
-    fun userList(httpServletRequest: HttpServletRequest) : ResponseEntity<String>{
-        val token = jwtTokenProvider.resolveToken(httpServletRequest)
 
-        if(token == null || !token.startsWith("Bearer ")){
-            return ResponseEntity.badRequest().body(null)
-        }
-
-        val jwtToken = token.split(" ")[1].trim()
-
-        if(!jwtTokenProvider.validateToken(jwtToken)){
-            return ResponseEntity.badRequest().body(null)
-        }
-
-        val role = jwtTokenProvider.userPrimaryKey(jwtToken).subject
-        val agencyId = jwtTokenProvider.userPrimaryKey(jwtToken)["userId"].toString()
-
-        if(role != "Manager"){
-            return ResponseEntity.badRequest().body(null)
-        }
-        //val userIdList = userService.userList(agencyId)
-
-        return ResponseEntity.ok("A")
-    }
 }
