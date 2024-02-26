@@ -41,6 +41,7 @@ class InfoService(val userRepository: UserRepository ) {
         user.address = infoDTO.address
         user.gender = infoDTO.gender
         user.glasses = infoDTO.glasses
+        user.visited = true
 
         userRepository.save(user)
 
