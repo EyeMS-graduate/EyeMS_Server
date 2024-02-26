@@ -21,7 +21,7 @@ class InfoController(
     }
 
     @PostMapping("/set")
-    fun receive(@RequestBody infoDTO: InfoDTO): ResponseEntity<Boolean>{
+    fun receiveInfo(@RequestBody infoDTO: InfoDTO): ResponseEntity<Boolean>{
         return ResponseEntity.ok().body(infoService.receiveInfo(infoDTO))
     }
 }
