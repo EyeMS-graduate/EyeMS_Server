@@ -13,13 +13,13 @@ class Agency (
 
     @Id
     @Column(name = "agency_id")
-    val agencyId : String,
-    val password : String,
-    val name : String,
+    var agencyId : String,
+    var password : String,
+    var name : String,
 
     @Column(name = "agency_name")
-    val agencyName : String,
-    val phone : String,
+    var agencyName : String,
+    var phone : String,
     val role : Role,
 
     @OneToMany(mappedBy = "agency", cascade = [CascadeType.ALL])
