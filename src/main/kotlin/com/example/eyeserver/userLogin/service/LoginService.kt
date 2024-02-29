@@ -31,15 +31,8 @@ class LoginService (
             return null
         }
 
-        val visited: Boolean = users.visited
-
-        if (visited === false){
-            users.visited = true
-            userRepository.save(users)
-        }
-
         val jwtInfo = jwtTokenProvider.createToken(users.userId, Role.User, users.agencyName)
-        return LoginResponseDTO(jwtInfo.token, visited)
+        return LoginResponseDTO(jwtInfo.token, users.visited)
     }
 
 }
