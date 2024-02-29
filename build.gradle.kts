@@ -51,6 +51,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+
+    // gpt
+    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("com.google.code.gson:gson:2.8.9")
 }
 
 tasks.withType<KotlinCompile> {
