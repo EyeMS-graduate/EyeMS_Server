@@ -2,9 +2,9 @@ package com.example.eyeserver.agencyLogin.controller
 
 import com.example.eyeserver.agencyLogin.dto.AgencyInfoDTO
 import com.example.eyeserver.agencyLogin.dto.ResponseAgencyInfoDTO
+import com.example.eyeserver.agencyLogin.dto.RoomDTO
 import com.example.eyeserver.agencyLogin.service.AgencyService
 import com.example.eyeserver.security.JwtTokenCheck
-import jakarta.servlet.http.HttpServlet
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,6 +19,10 @@ class AgencyInfoController (
     private val jwtTokenCheck: JwtTokenCheck,
     private val agencyService: AgencyService
 ){
+    @GetMapping("/test")
+    fun test() : String{
+        return "hello"
+    }
     @GetMapping("/info")
     fun agencyInfo(httpServletRequest: HttpServletRequest) : ResponseEntity<ResponseAgencyInfoDTO>{
         val result = jwtTokenCheck.tokenCheck(httpServletRequest)
@@ -55,5 +59,16 @@ class AgencyInfoController (
         }
 
         return ResponseEntity.ok(agencyService.deleteAgencyInfo(result[1]))
+    }
+
+    @GetMapping("/room")
+    fun roomInfo(httpServletRequest: HttpServletRequest) : ResponseEntity<RoomDTO>{
+        val result = jwtTokenCheck.tokenCheck(httpServletRequest)
+
+        if(result?.get(0) != "Manager"){
+            return ResponseEntity.badRequest().body(null)
+        }
+
+        return ResponseEntity.ok(agencyService.roomInfo(result[1]))
     }
 }

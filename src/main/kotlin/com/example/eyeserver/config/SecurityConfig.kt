@@ -1,7 +1,9 @@
 package com.example.eyeserver.config
 
+import com.example.eyeserver.chat.handler.WebSocketHandler
 import com.example.eyeserver.security.JwtAuthenticationFilter
 import com.example.eyeserver.security.JwtTokenProvider
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -14,17 +16,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import kotlin.jvm.Throws
 
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+
 @Configuration
 @EnableWebSecurity
 class SecurityConfig (
-    private val jwtTokenProvider: JwtTokenProvider
-){
+        private val jwtTokenProvider: JwtTokenProvider
+) {
+
     @Bean
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain{
         http
             .csrf{
-                    csrfConfig: CsrfConfigurer<HttpSecurity> -> csrfConfig.disable()
+                    it.disable()
             }
             .headers { headerConfig: HeadersConfigurer<HttpSecurity?> ->
                 headerConfig.frameOptions { frameOptionsConfig -> frameOptionsConfig.disable() }
@@ -35,6 +40,9 @@ class SecurityConfig (
                     .requestMatchers(AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/agency/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/user/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/ws/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/chat/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/**")).permitAll()
                     .anyRequest().authenticated()
             }
             .formLogin { formLogin -> formLogin.disable() }
@@ -42,6 +50,5 @@ class SecurityConfig (
 
         return http.build()
     }
-
 
 }

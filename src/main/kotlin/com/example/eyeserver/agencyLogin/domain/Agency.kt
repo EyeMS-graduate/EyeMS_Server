@@ -22,6 +22,8 @@ class Agency (
     var phone : String,
     val role : Role,
 
+    @Column(name = "room_id")
+    val room : Int,
     @OneToMany(mappedBy = "agency", cascade = [CascadeType.ALL])
     val users : List<Users> = ArrayList<Users>(),
 )
