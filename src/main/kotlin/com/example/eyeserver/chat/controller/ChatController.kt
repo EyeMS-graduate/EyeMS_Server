@@ -43,7 +43,7 @@ class ChatController(
             template.convertAndSend("/sub/enter/chat/room/" + chatMessage.roomId, result)
         }
         else{
-            template.convertAndSend("/sub/chat/room/" + chatMessage.roomId, result)
+            template.convertAndSend("/sub/chat/room/" + chatMessage.roomId +"/" +chatMessage.sender, result)
         }
 
     }
