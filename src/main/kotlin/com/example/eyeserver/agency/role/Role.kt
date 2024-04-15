@@ -1,4 +1,4 @@
-package com.example.eyeserver.agencyLogin.role
+package com.example.eyeserver.agency.role
 
 enum class Role {
     Admin,

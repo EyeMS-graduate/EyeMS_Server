@@ -1,10 +1,10 @@
-package com.example.eyeserver.agencyLogin.dto
+package com.example.eyeserver.agency.dto
 
 class AgencyInfoDTO (
     val agencyId : String,
     val password : String,
-    val name : String,
-    val agencyName : String,
     val phone : String,
+    val email : String,
+    val address : String,
 
 )

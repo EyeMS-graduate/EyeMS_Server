@@ -1,15 +1,12 @@
 package com.example.eyeserver.chat.handler
 
-import com.example.eyeserver.agencyLogin.repository.AgencyRepository
 import com.example.eyeserver.chat.dto.ChatMessage
 import com.example.eyeserver.chat.dto.ChatRoom
 import com.example.eyeserver.chat.service.ChatService
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.TextMessage
-import org.springframework.web.socket.WebSocketMessage
 import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.handler.TextWebSocketHandler
 

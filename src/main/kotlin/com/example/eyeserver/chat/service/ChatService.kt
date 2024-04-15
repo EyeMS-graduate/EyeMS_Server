@@ -71,7 +71,7 @@ class ChatService(private val objectMapper: ObjectMapper) {
                 } else {
 
                     val senderMap = mutableMapOf<String, Any>()
-                    if(chatMessage.people == 1){
+                    if (chatMessage.people == ChatMessage.PeopleType.PARENT) {
                         userList.remove(chatMessage.sender)
                     }
                     senderMap["list"] = userList
@@ -89,13 +89,33 @@ class ChatService(private val objectMapper: ObjectMapper) {
                 if (messageBuffer[chatMessage.roomId]?.size!! > 5000) {
                     messageBuffer[chatMessage.roomId]?.clear()
                 }
-                if(chatMessage.people == 1){
+                if (chatMessage.people == ChatMessage.PeopleType.PARENT) {
                     return agencyEnterUser(chatMessage)
                 }
             }
 
             ChatMessage.MessageType.EXIT -> {
-                //누가 나갔는지 확인하는 코드 작성
+
+                val iterator = messageBuffer[chatMessage.roomId]?.iterator()
+                while (iterator?.hasNext() == true) {
+                    val message = iterator.next()
+                    if (message.sender == chatMessage.sender) {
+                        iterator.remove()
+                    }
+                }
+
+
+                userList.remove(chatMessage.sender)
+                val senderMap = mutableMapOf<String, Any>()
+                senderMap["list"] = userList
+                result.add(
+                    MessageResponseDTO(
+                        sender = chatMessage.sender,
+                        message = senderMap
+                    )
+                )
+
+                return result
             }
         }
         val message = MessageResponseDTO(sender = chatMessage.sender, message = chatMessage.message)

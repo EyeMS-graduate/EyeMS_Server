@@ -31,7 +31,7 @@ class ChatController(
     @PostMapping("/send")
     fun sendRoom(@RequestBody chatMessage : ChatMessage){
         val chatRoom = chatService.findRoomById(chatMessage.roomId)
-        val message = ChatMessage(ChatMessage.MessageType.TALK, chatMessage.roomId, chatMessage.sender, chatMessage.message, 1)
+        val message = ChatMessage(ChatMessage.MessageType.TALK, chatMessage.roomId, chatMessage.sender, chatMessage.message, ChatMessage.PeopleType.PARENT)
         chatRoom?.sendMessage(message, chatService)
     }
 
@@ -39,7 +39,7 @@ class ChatController(
     @MessageMapping("/chat/message")
     fun message(chatMessage: ChatMessage){
         val result = chatService.messageHandler(chatMessage)
-        if(chatMessage.type == ChatMessage.MessageType.ENTER){
+        if(chatMessage.type == ChatMessage.MessageType.ENTER || chatMessage.type == ChatMessage.MessageType.EXIT){
             template.convertAndSend("/sub/enter/chat/room/" + chatMessage.roomId, result)
         }
         else{

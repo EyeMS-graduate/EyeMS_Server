@@ -1,10 +1,11 @@
 package com.example.eyeserver.userLogin.service
 
-import com.example.eyeserver.agencyLogin.repository.AgencyRepository
-import com.example.eyeserver.agencyLogin.role.Role
+import com.example.eyeserver.agency.repository.AgencyRepository
 import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.dto.SignUpUserDTO
+import com.example.eyeserver.userLogin.dto.UnityUserInfoDTO
 import com.example.eyeserver.userLogin.repository.UserRepository
+import org.apache.coyote.Response
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -45,6 +46,20 @@ class UserService(
             visited = false
         ))
         return true
+    }
+
+    fun userInfo(id : String) : UnityUserInfoDTO {
+        val user = userRepository.findByUserId(id)
+        return UnityUserInfoDTO(
+            userId = user.userId,
+            name = user.name,
+            birth = user.birth,
+            phone = user.phone,
+            email = user.email,
+            address = user.address,
+            glasses = user.glasses.toString(),
+            gender = user.gender.toString(),
+        )
     }
 
 }

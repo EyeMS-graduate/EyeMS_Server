@@ -1,7 +1,6 @@
 package com.example.eyeserver.userLogin.domain
 
-import com.example.eyeserver.agencyLogin.domain.Agency
-import com.example.eyeserver.agencyLogin.role.Role
+import com.example.eyeserver.agency.domain.Agency
 import jakarta.persistence.*
 
 @Entity

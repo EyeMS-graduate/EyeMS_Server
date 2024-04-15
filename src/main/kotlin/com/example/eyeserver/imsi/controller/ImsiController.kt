@@ -1,6 +1,6 @@
 package com.example.eyeserver.imsi.controller
 
-import com.example.eyeserver.agencyLogin.repository.AgencyRepository
+import com.example.eyeserver.agency.repository.AgencyRepository
 import com.example.eyeserver.imsi.DTO.UnityDataDTO
 import com.example.eyeserver.imsi.UnityDataRepository
 import com.example.eyeserver.imsi.domain.UnityData

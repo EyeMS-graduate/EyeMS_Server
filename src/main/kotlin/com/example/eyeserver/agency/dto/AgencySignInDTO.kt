@@ -1,4 +1,4 @@
-package com.example.eyeserver.agencyLogin.dto
+package com.example.eyeserver.agency.dto
 
 
 class AgencySignInDTO (

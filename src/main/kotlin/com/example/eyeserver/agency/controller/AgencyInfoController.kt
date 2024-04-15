@@ -1,9 +1,9 @@
-package com.example.eyeserver.agencyLogin.controller
+package com.example.eyeserver.agency.controller
 
-import com.example.eyeserver.agencyLogin.dto.AgencyInfoDTO
-import com.example.eyeserver.agencyLogin.dto.ResponseAgencyInfoDTO
-import com.example.eyeserver.agencyLogin.dto.RoomDTO
-import com.example.eyeserver.agencyLogin.service.AgencyService
+import com.example.eyeserver.agency.dto.AgencyInfoDTO
+import com.example.eyeserver.agency.dto.ResponseAgencyInfoDTO
+import com.example.eyeserver.agency.dto.RoomDTO
+import com.example.eyeserver.agency.service.AgencyService
 import com.example.eyeserver.security.JwtTokenCheck
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity

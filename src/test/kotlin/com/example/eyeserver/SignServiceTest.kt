@@ -1,8 +1,8 @@
 package com.example.eyeserver
 
-import com.example.eyeserver.agencyLogin.dto.AgencySignInDTO
-import com.example.eyeserver.agencyLogin.repository.AgencyRepository
-import com.example.eyeserver.agencyLogin.service.AgencyService
+import com.example.eyeserver.agency.dto.AgencySignInDTO
+import com.example.eyeserver.agency.repository.AgencyRepository
+import com.example.eyeserver.agency.service.AgencyService
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance

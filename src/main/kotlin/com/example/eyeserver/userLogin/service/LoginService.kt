@@ -1,7 +1,6 @@
 package com.example.eyeserver.userLogin.service
 
-import com.example.eyeserver.agencyLogin.dto.TokenResponseDTO
-import com.example.eyeserver.agencyLogin.role.Role
+import com.example.eyeserver.agency.role.Role
 import com.example.eyeserver.security.JwtTokenProvider
 import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.dto.LoginRequestDTO
@@ -10,7 +9,6 @@ import com.example.eyeserver.userLogin.repository.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Service
 @Transactional

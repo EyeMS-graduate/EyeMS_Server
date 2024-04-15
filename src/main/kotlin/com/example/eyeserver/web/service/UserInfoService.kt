@@ -1,6 +1,6 @@
 package com.example.eyeserver.web.service
 
-import com.example.eyeserver.agencyLogin.repository.AgencyRepository
+import com.example.eyeserver.agency.repository.AgencyRepository
 import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.repository.UserRepository
 import com.example.eyeserver.web.dto.UserInfoDTO
