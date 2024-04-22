@@ -33,6 +33,7 @@ class AgencyService(
                 token = "",
                 utcExpirationDate = Date(),
                 room = "",
+                success = false
             )
         }
 
@@ -44,6 +45,7 @@ class AgencyService(
             token = jwtInfo.token,
             utcExpirationDate = jwtInfo.utcExpirationDate,
             room = user.room.toString(),
+            success = true
         )
 
     }

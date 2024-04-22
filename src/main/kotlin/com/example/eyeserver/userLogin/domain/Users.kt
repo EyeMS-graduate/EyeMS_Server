@@ -1,6 +1,7 @@
 package com.example.eyeserver.userLogin.domain
 
 import com.example.eyeserver.agency.domain.Agency
+import com.example.eyeserver.contents.domain.UserContents
 import jakarta.persistence.*
 
 @Entity
@@ -27,5 +28,8 @@ data class Users (
     @ManyToOne
     @JoinColumn(name = "agency")
     var agency: Agency,
+
+    @OneToMany(mappedBy = "userId", cascade = [CascadeType.ALL])
+    val contentsResult: List<UserContents> = ArrayList<UserContents>()
 
 )

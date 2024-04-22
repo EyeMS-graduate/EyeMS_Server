@@ -6,6 +6,7 @@ class TokenAndRoomResponseDTO (
     var token : String,
     var utcExpirationDate : Date,
     var room : String,
+    var success : Boolean,
 ){
 
 }

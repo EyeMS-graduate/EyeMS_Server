@@ -4,6 +4,7 @@ import com.example.eyeserver.security.JwtTokenCheck
 import com.example.eyeserver.security.JwtTokenProvider
 import com.example.eyeserver.web.dto.UserIdDTO
 import com.example.eyeserver.web.dto.UserInfoDTO
+import com.example.eyeserver.web.dto.UserListDTO
 import com.example.eyeserver.web.service.UserInfoService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity
@@ -17,7 +18,7 @@ class UserInfoController (
     private val jwtTokenCheck: JwtTokenCheck,
 ){
     @GetMapping("/userlist")
-    fun userList(httpServletRequest: HttpServletRequest) : ResponseEntity<MutableList<String>> {
+    fun userList(httpServletRequest: HttpServletRequest) : ResponseEntity<UserListDTO> {
         val result =  jwtTokenCheck.tokenCheck(httpServletRequest)
 
         if(result?.get(0) != "Manager"){

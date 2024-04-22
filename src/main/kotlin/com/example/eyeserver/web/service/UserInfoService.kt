@@ -4,6 +4,7 @@ import com.example.eyeserver.agency.repository.AgencyRepository
 import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.repository.UserRepository
 import com.example.eyeserver.web.dto.UserInfoDTO
+import com.example.eyeserver.web.dto.UserListDTO
 import jakarta.transaction.Transactional
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -15,13 +16,14 @@ class UserInfoService (
     private val passwordEncoder: PasswordEncoder,
 
 ){
-    fun userList(agencyId : String) : MutableList<String>{
+    fun userList(agencyId : String) : UserListDTO{
         val users = agencyRepository.findByAgencyId(agencyId).users
         var usersId : MutableList<String> = mutableListOf()
         for (u in users){
             usersId.add(u.userId)
         }
-        return usersId
+        return UserListDTO(success = true,
+                           userList = usersId)
     }
 
     @Transactional
@@ -78,6 +80,7 @@ class UserInfoService (
         userRepository.save(userInfo)
         return true
     }
+
 
 
 }

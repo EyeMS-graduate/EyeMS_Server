@@ -5,6 +5,8 @@ import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.dto.SignUpUserDTO
 import com.example.eyeserver.userLogin.dto.UnityUserInfoDTO
 import com.example.eyeserver.userLogin.repository.UserRepository
+import com.example.eyeserver.web.dto.UserInfoDTO
+import jakarta.transaction.Transactional
 import org.apache.coyote.Response
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -60,6 +62,33 @@ class UserService(
             glasses = user.glasses.toString(),
             gender = user.gender.toString(),
         )
+    }
+
+    @Transactional
+    fun unityUserUpdate(unityUserInfoDTO: UnityUserInfoDTO) : Boolean{
+        try {
+            val user = userRepository.findByUserId(unityUserInfoDTO.userId)
+            var gender : Boolean = false
+            var glasses : Boolean = false
+            if(unityUserInfoDTO.gender == "male"){
+                gender = true
+            }
+            if(unityUserInfoDTO.glasses == "ok"){
+                glasses = true
+            }
+            user.name = unityUserInfoDTO.name
+            user.address = unityUserInfoDTO.address
+            user.birth = unityUserInfoDTO.birth
+            user.phone = unityUserInfoDTO.phone
+            user.email = unityUserInfoDTO.email
+            user.gender = gender
+            user.glasses = glasses
+            userRepository.save(user)
+        }
+        catch (e : Exception){
+            return false
+        }
+        return true
     }
 
 }
