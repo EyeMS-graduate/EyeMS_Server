@@ -64,8 +64,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.webjars:stomp-websocket:2.3.3")
 
-    implementation("org.json:json:20211205")
-    implementation("com.google.code.gson:gson:2.8.8")
 }
 
 tasks.withType<KotlinCompile> {

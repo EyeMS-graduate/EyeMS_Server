@@ -65,6 +65,9 @@ class ChatService(private val objectMapper: ObjectMapper) {
                 userList.add(chatMessage.sender)
 
                 if (!messageBuffer.containsKey(chatMessage.roomId)) {
+                    if (chatMessage.people == ChatMessage.PeopleType.PARENT) {
+                        userList.remove(chatMessage.sender)
+                    }
                     messageBuffer[chatMessage.roomId] = mutableListOf()
                     return mutableListOf()
 

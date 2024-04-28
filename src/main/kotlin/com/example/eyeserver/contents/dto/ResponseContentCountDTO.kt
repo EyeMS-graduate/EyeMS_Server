@@ -1,10 +1,10 @@
 package com.example.eyeserver.contents.dto
 
 data class ResponseContentCountDTO (
-    val content1 : Integer,
-    val content2 : Integer,
-    val content3 : Integer,
-    val content4 : Integer,
-    val content5 : Integer,
-    val content6 : Integer,
+    val content1 : Long,
+    val content2 : Long,
+    val content3 : Long,
+    val content4 : Long,
+    val content5 : Long,
+    val content6 : Long,
 )
