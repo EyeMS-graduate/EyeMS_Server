@@ -1,4 +1,4 @@
-package com.example.eyeserver.contents.dto
+package com.example.eyeserver.contents.dto.unitydto
 
 import java.time.LocalDate
 

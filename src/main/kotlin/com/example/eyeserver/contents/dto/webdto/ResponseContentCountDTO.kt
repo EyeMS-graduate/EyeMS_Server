@@ -1,4 +1,4 @@
-package com.example.eyeserver.contents.dto
+package com.example.eyeserver.contents.dto.webdto
 
 data class ResponseContentCountDTO (
     val content1 : Long,

@@ -21,10 +21,14 @@ data class UserContents(
     val date : LocalDate,
 
     @Column(name = "content_name")
+    @Enumerated(value = EnumType.STRING)
     val contentName : ContentsName,
 
     @Column(name = "score")
     val score : Double,
+
+    @Column(name = "origin_score")
+    val originScore : Double = 10.0,
 
     @ManyToOne
     @JoinColumn(name = "users")
