@@ -16,23 +16,5 @@ class AgencyImageService (
 ){
 
 
-    fun addImages(files : MultipartFile): String {
-        val agencyImage = AgencyImage(
-            agencyId = "1",
-            firstImage = Binary(BsonBinarySubType.BINARY, files.bytes),
-            secondImage = Binary(BsonBinarySubType.BINARY, files.bytes),
-            thirdImage = Binary(BsonBinarySubType.BINARY, files.bytes)
-        )
-        val fileId =  agencyImageRepository.insert(agencyImage)
-        return fileId.toString()
-    }
-
-    fun getImage(id : String): Binary {
-        val agency : List<AgencyImage> = agencyImageRepository.findByAgencyId(id)
-        return agency[0].firstImage
-    }
-
-
-
 
 }

@@ -20,17 +20,4 @@ import org.springframework.web.multipart.MultipartFile
 class AgencyImageController (
     private val agencyImageService: AgencyImageService,
 ){
-    @GetMapping("/getImage/{id}")
-    fun getAllImage(@PathVariable id : String) : ResponseEntity<Binary> {
-
-        val image = agencyImageService.getImage(id)
-
-        return ResponseEntity.ok(image)
-    }
-
-    @PostMapping("/saveImage")
-    fun saveAllImage(@RequestParam(value = "files", required = false) files : MultipartFile, ) : ResponseEntity<String>{
-        val id =  agencyImageService.addImages(files)
-        return ResponseEntity.ok(id)
-    }
 }

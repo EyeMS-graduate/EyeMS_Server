@@ -12,8 +12,6 @@ interface UserContentsRepository : JpaRepository<UserContents, Long>{
 
     fun findTop5ByUserIdOrderByDateDesc(userId : String) : List<UserContents>
 
-    fun findByUserIdAndDateBetweenOrderByDateDesc(userId : String, startDate : LocalDate, endDate : LocalDate) : List<UserContents>
-
 
     fun countByContentNameAndUserId(contentName : UserContents.ContentsName, userId : String,) : Long
 

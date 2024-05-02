@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AgencyImageRepository : MongoRepository<AgencyImage, String>{
 
-    fun findByAgencyId(agencyId : String) : List<AgencyImage>
+    fun findByAgencyIdAndImageNum(agencyId : String, imageNum : Int) : List<AgencyImage>
 
 }

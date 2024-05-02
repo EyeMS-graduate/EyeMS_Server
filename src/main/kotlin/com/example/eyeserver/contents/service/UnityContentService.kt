@@ -2,8 +2,6 @@ package com.example.eyeserver.contents.service
 
 import com.example.eyeserver.contents.domain.UserContents
 import com.example.eyeserver.contents.dto.unitydto.*
-import com.example.eyeserver.contents.dto.webdto.ResponseLatestContentDTO
-import com.example.eyeserver.contents.dto.webdto.ResponseUserTestDTO
 import com.example.eyeserver.contents.repository.UserContentsRepository
 import com.example.eyeserver.contents.repository.UserTestRepository
 import com.example.eyeserver.userLogin.domain.Users

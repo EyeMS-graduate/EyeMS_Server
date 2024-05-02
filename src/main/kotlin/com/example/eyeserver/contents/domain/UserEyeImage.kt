@@ -11,8 +11,16 @@ class UserEyeImage (
     @Id
     val userId : String,
 
+    val image : Binary,
+    val imageNum : Int,
+
+    val fixCount : Double,
+    val saccade : Double,
+    val totalReadTime : Double,
+    val accurate : Double,
+    val regression : Double,
+    val questionTime : Double,
+
+    val dyslexiaScore : Double,
     val date : LocalDate,
-    val firstImage : Binary,
-    val secondImage : Binary,
-    val thirdImage : Binary,
     )

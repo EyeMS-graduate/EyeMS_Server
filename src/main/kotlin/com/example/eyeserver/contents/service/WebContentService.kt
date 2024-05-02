@@ -1,16 +1,19 @@
 package com.example.eyeserver.contents.service
 
+import com.example.eyeserver.agency.repository.AgencyRepository
 import com.example.eyeserver.contents.domain.UserContents
 import com.example.eyeserver.contents.dto.webdto.*
 import com.example.eyeserver.contents.repository.UserContentsRepository
 import com.example.eyeserver.contents.repository.UserTestRepository
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class WebContentService(
     val userContentsRepository: UserContentsRepository,
     val userTestRepository: UserTestRepository,
+    val agencyRepository : AgencyRepository,
 ) {
     fun dateShowOrderByDate(userId : String) : MutableList<ContentResultDTO>{
         val result = userContentsRepository.findTop5ByUserIdOrderByDateDesc(userId)
@@ -24,27 +27,6 @@ class WebContentService(
                     score = d.score,
                     date = d.date,
             )
-            )
-        }
-        return data
-    }
-
-    fun dateShowBetweenDate(requestBetweenDateDTO: RequestBetweenDateDTO) : MutableList<ContentResultDTO>{
-        val result = userContentsRepository.findByUserIdAndDateBetweenOrderByDateDesc(
-            requestBetweenDateDTO.userId,
-            requestBetweenDateDTO.startDate,
-            requestBetweenDateDTO.endDate,
-        )
-
-        val data = mutableListOf<ContentResultDTO>()
-        for (d in result){
-            data.add(
-                ContentResultDTO(
-                    userId= d.userId,
-                    contentName = d.contentName,
-                    score = d.score,
-                    date = d.date,
-                )
             )
         }
         return data
@@ -80,17 +62,62 @@ class WebContentService(
         return ResponseLatestContentDTO(latest, now)
     }
 
-    fun latestTestALlAverage(userId: String) : ResponseUserTestDTO {
+    fun latestTestALlAverage(userId: String) : ResponseLatestTestDTO {
         val avgResult = userTestRepository.findAllAverage(userId)
         val now = listOf<Double>(avgResult[0][0],avgResult[0][1],avgResult[0][2],avgResult[0][3],avgResult[0][4],avgResult[0][5])
         return try{
             val result = userTestRepository.findTopByUserIdOrderByDateDesc(userId)
             val latest = listOf<Double>(result.accurate, result.fixCount, result.questionTime, result.regression, result.saccade, result.totalReadTime)
-            ResponseUserTestDTO(latest, now)
+            ResponseLatestTestDTO(latest, now)
         } catch (e : EmptyResultDataAccessException){
-            ResponseUserTestDTO(now, listOf(0.0,0.0,0.0,0.0,0.0,0.0))
+            ResponseLatestTestDTO(now, listOf(0.0,0.0,0.0,0.0,0.0,0.0))
         }
+    }
 
+    fun testDataOrderByDate(userId: String) : MutableList<TestResultDTO> {
+        val result = userTestRepository.findTop5ByUserIdOrderByDateDesc(userId)
+        val data = mutableListOf<TestResultDTO>()
+        for (i in result){
+            data.add(TestResultDTO(i.userId, i.fixCount, i.saccade, i.totalReadTime, i.accurate, i.regression, i.questionTime, i.date))
+        }
+        return data
+    }
+
+    fun allTestData(agencyId : String) : MutableList<TestResultDTO>{
+        val result = mutableListOf<TestResultDTO>()
+        val users = agencyRepository.findByAgencyId(agencyId).users
+        for (user in users){
+            val userContents = user.contentsTest
+            for (content in userContents){
+                result.add(TestResultDTO(content.userId,content.fixCount,content.saccade,content.totalReadTime,content.accurate,content.regression,content.questionTime,content.date))
+            }
+        }
+        return result
+    }
+
+    fun testDateShowBetweenDate(requestBetweenDateDTO: RequestBetweenDateDTO) : MutableList<TestResultDTO>{
+        val result = userTestRepository.findByUserIdAndDateBetweenOrderByDateDesc(
+            requestBetweenDateDTO.userId,
+            LocalDate.parse(requestBetweenDateDTO.startDate),
+            LocalDate.parse(requestBetweenDateDTO.endDate),
+        )
+
+        val data = mutableListOf<TestResultDTO>()
+        for (d in result){
+            data.add(
+                TestResultDTO(
+                    userId= d.userId,
+                    fixCount= d.fixCount,
+                    date = d.date,
+                    saccade = d.saccade,
+                    totalReadTime = d.totalReadTime,
+                    accurate = d.accurate,
+                    regression = d.regression,
+                    questionTime = d.questionTime,
+                )
+            )
+        }
+        return data
     }
 
 
