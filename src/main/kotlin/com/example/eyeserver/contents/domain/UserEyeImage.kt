@@ -11,7 +11,7 @@ class UserEyeImage (
     @Id
     val userId : String,
 
-    val image : Binary,
+    val image : String,
     val imageNum : Int,
 
     val fixCount : Double,

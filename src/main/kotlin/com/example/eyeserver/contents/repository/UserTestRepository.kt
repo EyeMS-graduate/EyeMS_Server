@@ -14,7 +14,7 @@ interface UserTestRepository : JpaRepository<UserTest, Long> {
     fun findTopByUserIdOrderByDateDesc(userId: String) : UserTest
 
     @Query("SELECT AVG(ut.accurate) , AVG (ut.fixCount),AVG (ut.questionTime),AVG (ut.regression),AVG (ut.saccade) ,AVG (ut.totalReadTime) " +
-            " FROM usertest ut ")
+            " FROM usertest ut")
     fun findAllAverage(@Param(value = "userId") userId: String) : List<Array<Double>>
 
     fun findTop5ByUserIdOrderByDateDesc(userId : String) : List<UserTest>
