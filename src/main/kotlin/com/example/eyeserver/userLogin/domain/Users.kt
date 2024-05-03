@@ -4,6 +4,7 @@ import com.example.eyeserver.agency.domain.Agency
 import com.example.eyeserver.contents.domain.UserContents
 import com.example.eyeserver.contents.domain.UserTest
 import jakarta.persistence.*
+import java.time.LocalDate
 
 @Entity
 data class Users (
@@ -25,6 +26,7 @@ data class Users (
     var gender: Boolean,
     var visited: Boolean,
     var glasses: Boolean,
+    val date : LocalDate,
 
     @ManyToOne
     @JoinColumn(name = "agency")

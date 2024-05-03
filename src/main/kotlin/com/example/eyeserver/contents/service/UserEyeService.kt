@@ -14,7 +14,7 @@ class UserEyeService (
 ){
 
     fun saveUserImage(requestUserEyeImageDTO: RequestUserEyeImageDTO) : ResponseUserContentDTO{
-        for (i in 0..3){
+        for (i in 0..2){
             userEyeImageRepository.insert(UserEyeImage(
                 userId = requestUserEyeImageDTO.userId,
                 image = requestUserEyeImageDTO.image[i],

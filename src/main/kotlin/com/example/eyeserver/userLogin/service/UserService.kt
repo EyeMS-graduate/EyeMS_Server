@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional
 import org.apache.coyote.Response
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class UserService(
@@ -45,7 +46,8 @@ class UserService(
             gender = gender,
             glasses = glasses,
             agency = agency,
-            visited = false
+            visited = false,
+            date = LocalDate.now(),
         ))
         return true
     }

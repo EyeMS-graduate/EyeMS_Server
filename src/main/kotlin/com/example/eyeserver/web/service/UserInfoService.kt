@@ -8,6 +8,7 @@ import com.example.eyeserver.web.dto.UserListDTO
 import jakarta.transaction.Transactional
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class UserInfoService (
@@ -51,7 +52,8 @@ class UserInfoService (
             email = userInfo.email,
             glasses = glasses,
             phone = userInfo.phone,
-            address = userInfo.address
+            address = userInfo.address,
+            date = userInfo.date.toString(),
         )
     }
 

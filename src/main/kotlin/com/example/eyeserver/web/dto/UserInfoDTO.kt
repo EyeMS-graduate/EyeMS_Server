@@ -1,5 +1,7 @@
 package com.example.eyeserver.web.dto
 
+import java.time.LocalDate
+
 class UserInfoDTO (
     val userId : String,
     val password : String,
@@ -10,4 +12,5 @@ class UserInfoDTO (
     val address : String,
     val glasses : String?,
     val gender : String?,
+    val date : String,
 )
