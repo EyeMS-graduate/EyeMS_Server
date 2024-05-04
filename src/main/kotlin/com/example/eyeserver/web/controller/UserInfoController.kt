@@ -29,6 +29,21 @@ class UserInfoController (
         return ResponseEntity.ok(userNameList)
     }
 
+    @GetMapping("/user/{userId}")
+    fun findUser(httpServletRequest: HttpServletRequest, @PathVariable userId : String) : ResponseEntity<UserListDTO>{
+        val result =  jwtTokenCheck.tokenCheck(httpServletRequest)
+
+        if(result?.get(0) != "Manager"){
+            return ResponseEntity.badRequest().body(null)
+        }
+        return if(userId == ""){
+            ResponseEntity.ok().body(userInfoService.userList(result[1]))
+        } else{
+            ResponseEntity.ok().body(userInfoService.findUser(userId, result[1]))
+        }
+
+    }
+
 
     @PostMapping("/delete")
     fun deleteUser(httpServletRequest: HttpServletRequest, @RequestBody userIdDTO: UserIdDTO) : ResponseEntity<String>{

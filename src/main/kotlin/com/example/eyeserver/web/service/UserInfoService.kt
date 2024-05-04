@@ -1,6 +1,7 @@
 package com.example.eyeserver.web.service
 
 import com.example.eyeserver.agency.repository.AgencyRepository
+import com.example.eyeserver.contents.repository.UserEyeImageRepository
 import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.repository.UserRepository
 import com.example.eyeserver.web.dto.UserInfoDTO
@@ -8,15 +9,15 @@ import com.example.eyeserver.web.dto.UserListDTO
 import jakarta.transaction.Transactional
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 
 @Service
 class UserInfoService (
     private val agencyRepository: AgencyRepository,
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
+    private val userEyeImageRepository: UserEyeImageRepository,
 
-){
+    ){
     fun userList(agencyId : String) : UserListDTO{
         val users = agencyRepository.findByAgencyId(agencyId).users
         var usersId : MutableList<String> = mutableListOf()
@@ -30,7 +31,7 @@ class UserInfoService (
     @Transactional
     fun deleteUser(userId : String) {
         userRepository.deleteByUserId(userId)
-
+        userEyeImageRepository.deleteByUserId(userId)
     }
 
     fun userInfo(userId: String) : UserInfoDTO{
@@ -73,7 +74,7 @@ class UserInfoService (
         }
         userInfo.password = passwordEncoder.encode(userInfoDTO.password)
         userInfo.name = userInfoDTO.name
-        userInfo.birth = userInfoDTO.birth.substring(0,10)
+        userInfo.birth = userInfoDTO.birth
         userInfo.gender = gender
         userInfo.email = userInfoDTO.email
         userInfo.glasses = glasses
@@ -81,6 +82,18 @@ class UserInfoService (
         userInfo.address = userInfoDTO.address
         userRepository.save(userInfo)
         return true
+    }
+
+    fun findUser(userId : String, agencyId: String) : UserListDTO{
+
+        val users = userRepository.findByUserIdContainsAndAgency_AgencyId(userId, agencyId)
+        var usersId : MutableList<String> = mutableListOf()
+        for (u in users){
+            usersId.add(u.userId)
+        }
+        return UserListDTO(success = true,
+            userList = usersId)
+
     }
 
 

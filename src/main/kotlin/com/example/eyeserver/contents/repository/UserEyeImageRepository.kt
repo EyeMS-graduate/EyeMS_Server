@@ -8,5 +8,6 @@ import java.time.LocalDate
 @Repository
 interface UserEyeImageRepository : MongoRepository< UserEyeImage,Long>{
 
-    fun findByUserIdAndDateOrderByImageNum(userId : String, date : LocalDate) : List<UserEyeImage>
+    fun findByUserIdAndDateOrderByImageNum(userId : String, date : String) : List<UserEyeImage>
+    fun deleteByUserId(userId: String)
 }

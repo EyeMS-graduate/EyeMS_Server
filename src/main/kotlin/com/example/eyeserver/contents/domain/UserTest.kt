@@ -9,7 +9,7 @@ data class UserTest (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    val id : Long?,
+    val id : Long? = null,
 
     @Column(name = "userId")
     val userId : String,
@@ -37,6 +37,6 @@ data class UserTest (
 
     @ManyToOne
     @JoinColumn(name = "users")
-    var user: Users,
+    var user: Users? = null,
 
     )

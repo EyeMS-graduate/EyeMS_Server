@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
 import java.util.Date
 
-@Document(collection = "eyeImage")
+@Document(collection = "agencyImage")
 class UserEyeImage (
     @Id
     val userId : String,
@@ -22,5 +22,5 @@ class UserEyeImage (
     val questionTime : Double,
 
     val dyslexiaScore : Double,
-    val date : LocalDate,
+    val date : String,
     )

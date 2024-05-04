@@ -23,7 +23,7 @@ class UserEyeController(
     }
 
     @GetMapping("/showimage/{userId}/{date}")
-    fun showThreeImage(@PathVariable userId : String, @PathVariable date : LocalDate) : ResponseEntity<ResponseUserEyeImageDTO>{
+    fun showThreeImage(@PathVariable userId : String, @PathVariable date : String) : ResponseEntity<ResponseUserEyeImageDTO>{
         return ResponseEntity.ok().body(userEyeService.getUserAllImage(userId, date))
     }
 

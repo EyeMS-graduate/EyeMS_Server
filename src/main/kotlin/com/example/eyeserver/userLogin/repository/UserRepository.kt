@@ -10,4 +10,6 @@ interface UserRepository : JpaRepository<Users, String>{
     fun findByUserId(id: String): Users
     fun existsByUserId(id : String) : Boolean
     fun deleteByUserId(id : String)
+
+    fun findByUserIdContainsAndAgency_AgencyId(userId: String, agency_agencyId: String) : List<Users>
 }

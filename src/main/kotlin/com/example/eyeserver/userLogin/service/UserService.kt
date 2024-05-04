@@ -1,6 +1,7 @@
 package com.example.eyeserver.userLogin.service
 
 import com.example.eyeserver.agency.repository.AgencyRepository
+import com.example.eyeserver.contents.repository.UserEyeImageRepository
 import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.dto.SignUpUserDTO
 import com.example.eyeserver.userLogin.dto.UnityUserInfoDTO
@@ -39,7 +40,7 @@ class UserService(
             status = null,
             name = signUpUserDTO.name,
             agencyName = agencyName,
-            birth = signUpUserDTO.birth.substring(0,10),
+            birth = signUpUserDTO.birth,
             phone = signUpUserDTO.phone,
             email = signUpUserDTO.email,
             address = signUpUserDTO.address,
