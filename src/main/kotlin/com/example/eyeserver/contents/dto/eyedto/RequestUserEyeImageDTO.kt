@@ -1,7 +1,9 @@
 package com.example.eyeserver.contents.dto.eyedto
 
+import io.swagger.v3.oas.annotations.media.Schema
 import org.bson.types.Binary
 
+@Schema(description = "유저 test 결과 이미지 3개 DTO 요청")
 data class RequestUserEyeImageDTO (
     val userId : String,
     val image : List<String>,

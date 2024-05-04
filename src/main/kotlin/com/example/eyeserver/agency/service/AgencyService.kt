@@ -109,15 +109,15 @@ class AgencyService(
     }
 
     @Transactional
-    fun updateAgencyInfo(agencyInfoDTO: AgencyInfoDTO) : Boolean{
-        if(!userRepository.existsByAgencyId(agencyInfoDTO.agencyId)){
+    fun updateAgencyInfo(requestAgencyInfoDTO: RequestAgencyInfoDTO) : Boolean{
+        if(!userRepository.existsByAgencyId(requestAgencyInfoDTO.agencyId)){
             return false
         }
-        val agency = userRepository.findByAgencyId(agencyInfoDTO.agencyId)
-        agency.phone = agencyInfoDTO.phone
-        agency.password = passwordEncoder.encode(agencyInfoDTO.password)
-        agency.email = agencyInfoDTO.email
-        agency.address = agencyInfoDTO.address
+        val agency = userRepository.findByAgencyId(requestAgencyInfoDTO.agencyId)
+        agency.phone = requestAgencyInfoDTO.phone
+        agency.password = passwordEncoder.encode(requestAgencyInfoDTO.password)
+        agency.email = requestAgencyInfoDTO.email
+        agency.address = requestAgencyInfoDTO.address
         userRepository.save(agency)
         return true
     }

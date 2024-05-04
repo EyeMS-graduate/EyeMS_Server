@@ -14,7 +14,9 @@ spring:
       port: 27017
       database: agencyimage
 
-
+springdoc:
+  paths-to-match:
+    - /**
 
   jpa:
     open-in-view: true

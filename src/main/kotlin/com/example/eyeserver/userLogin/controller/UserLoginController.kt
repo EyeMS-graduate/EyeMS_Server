@@ -6,10 +6,13 @@ import com.example.eyeserver.userLogin.dto.LoginResponseDTO
 import com.example.eyeserver.userLogin.dto.UnityUserInfoDTO
 import com.example.eyeserver.userLogin.service.LoginService
 import com.example.eyeserver.userLogin.service.UserService
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
+@Tag(name = "Unity login 및 정보수정 API", description = "Unity에서 로그인 시 진행되는 API 모음")
 @RestController
 @RequestMapping("/user")
 class UserLoginController (
@@ -18,6 +21,7 @@ class UserLoginController (
     val jwtTokenCheck: JwtTokenCheck
 ) {
 
+    @Operation(summary = "Unity login", description = "Unity 로그인 API")
     @PostMapping("/signin")
     fun userSignIn(@RequestBody loginRequestDTO: LoginRequestDTO): ResponseEntity<LoginResponseDTO> {
       
@@ -25,6 +29,7 @@ class UserLoginController (
 
     }
 
+    @Operation(summary = "Unity info check", description = "Unity 첫 로그인시 정보 제공 API")
     @GetMapping("/unityInfo")
     fun userUnityInfo(httpServletRequest: HttpServletRequest) : ResponseEntity<Any>{
         val result = jwtTokenCheck.tokenCheck(httpServletRequest)
@@ -35,6 +40,7 @@ class UserLoginController (
         return ResponseEntity.ok(userService.userInfo(result?.get(1)!!))
     }
 
+    @Operation(summary = "Unity info update", description = "Unity 첫 정보수정 API")
     @PostMapping("/unityupdate")
     fun userUnityUpdate(unityUserInfoDTO: UnityUserInfoDTO) : ResponseEntity<Boolean> {
         val result = userService.unityUserUpdate(unityUserInfoDTO)
