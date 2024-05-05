@@ -10,7 +10,7 @@ import java.time.LocalDate
 data class Users (
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "userId")
     val userId: String,
 
     var password: String,

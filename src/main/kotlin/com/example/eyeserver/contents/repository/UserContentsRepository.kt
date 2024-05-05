@@ -1,6 +1,7 @@
 package com.example.eyeserver.contents.repository
 
 import com.example.eyeserver.contents.domain.UserContents
+import com.example.eyeserver.contents.domain.UserTest
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -25,5 +26,7 @@ interface UserContentsRepository : JpaRepository<UserContents, Long>{
 
     fun countByDateAndUserId(date : LocalDate, userId : String) : Int
 
+    @Query("select uc from usercontents uc left join uc.user.agency ua where ua.agencyId =:agencyId and uc.contentName = :contentName and uc.date between :startDate and :endDate")
+    fun getContentPlay(@Param(value = "agencyId")agencyId : String ,@Param(value = "contentName")contentName : UserContents.ContentsName, @Param(value = "startDate")startDate : LocalDate, @Param(value = "endDate")endDate : LocalDate) : List<Array<UserContents>>
 
 }

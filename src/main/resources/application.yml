@@ -13,21 +13,19 @@ spring:
       host: localhost
       port: 27017
       database: agencyimage
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
 
 springdoc:
   paths-to-match:
     - /**
 
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-    properties:
-      hibernate.format_sql: true
-      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
 
 
 

@@ -14,7 +14,7 @@ data class UserContents(
     @Column(name = "id")
     val id : Long?,
 
-    @Column(name = "userId")
+    @Column(name = "user_id")
     val userId : String,
 
     @Column(name = "date")
@@ -32,7 +32,7 @@ data class UserContents(
 
     @ManyToOne
     @JoinColumn(name = "users")
-    var user: Users ,
+    var user: Users? = null,
 ) {
 
     enum class ContentsName{

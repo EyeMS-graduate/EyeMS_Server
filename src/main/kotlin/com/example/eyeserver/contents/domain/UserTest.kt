@@ -11,7 +11,7 @@ data class UserTest (
     @Column(name = "id")
     val id : Long? = null,
 
-    @Column(name = "userId")
+    @Column(name = "user_id")
     val userId : String,
 
     @Column(name = "fix_count")

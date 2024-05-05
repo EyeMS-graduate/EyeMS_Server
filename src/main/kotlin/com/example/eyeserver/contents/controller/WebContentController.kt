@@ -24,14 +24,14 @@ class WebContentController (
     private val jwtTokenCheck: JwtTokenCheck,
 
 ){
-    @Operation(summary = "content 요약", description = "usrId를 주면 해당 유저의 content 플레이 결과 상위 5개 제공")
+    @Operation(summary = "content 요약", description = "userId를 주면 해당 유저의 content 플레이 결과 상위 5개 제공")
     @GetMapping("/summerycontent/{userId}")
     fun contentShowOrderByDate(@PathVariable userId : String) : ResponseEntity<MutableList<ContentResultDTO>>{
         val result = webContentService.dateShowOrderByDate(userId)
         return ResponseEntity.ok().body(result)
     }
 
-    @Operation(summary = "content 횟수", description = "usrId를 주면 해당 유저의 각 content 플레이 횟수 제공")
+    @Operation(summary = "content 횟수", description = "userId를 주면 해당 유저의 각 content 플레이 횟수 제공")
     @GetMapping("/countcontent/{userId}")
     fun allCountContent(@PathVariable userId : String) : ResponseEntity<ResponseContentCountDTO>{
         val result = webContentService.contentCounter(userId)
@@ -39,28 +39,28 @@ class WebContentController (
     }
 
 
-    @Operation(summary = "최근 content 평균지표", description = "usrId를 주면 해당 유저의 content 플레이 결과 평균 지표 제공")
+    @Operation(summary = "최근 content 평균지표", description = "userId를 주면 해당 유저의 content 플레이 결과 평균 지표 제공")
     @GetMapping("/latestcontent/{userId}")
     fun latestAverageContent(@PathVariable userId : String) : ResponseEntity<ResponseLatestContentDTO>{
         val result = webContentService.latestAverage(userId)
         return ResponseEntity.ok().body(result)
     }
 
-    @Operation(summary = "최근 test 평균지표", description = "usrId를 주면 해당 유저의 test 플레이 결과 평균 지표 제공")
+    @Operation(summary = "최근 test 평균지표", description = "userId를 주면 해당 유저의 test 플레이 결과 평균 지표 제공")
     @GetMapping("/latesttest/{userId}")
     fun latestAverageTest(@PathVariable userId : String) : ResponseEntity<ResponseLatestTestDTO>{
         val result = webContentService.latestTestALlAverage(userId)
         return ResponseEntity.ok().body(result)
     }
 
-    @Operation(summary = "test 요약", description = "usrId를 주면 해당 유저의 test 플레이 결과 상위 5개 제공")
+    @Operation(summary = "test 요약", description = "userId를 주면 해당 유저의 test 플레이 결과 상위 5개 제공")
     @GetMapping("/summarytest/{userId}")
     fun testShowOrderByDate(@PathVariable userId: String) : ResponseEntity<MutableList<TestResultDTO>>{
         val result = webContentService.testDataOrderByDate(userId)
         return ResponseEntity.ok().body(result)
     }
 
-    @Operation(summary = "test 전체", description = "usrId를 주면 해당 유저의 test 플레이 결과 전체 제공")
+    @Operation(summary = "test 전체", description = "userId를 주면 해당 유저의 test 플레이 결과 전체 제공")
     @GetMapping("/summarytestall")
     fun allTestShowOrderByDate(httpServletRequest: HttpServletRequest) : ResponseEntity<MutableList<TestResultDTO>>{
         val result = jwtTokenCheck.tokenCheck(httpServletRequest)
@@ -72,11 +72,30 @@ class WebContentController (
         return ResponseEntity.ok().body(webContentService.allTestData(result[1]))
     }
 
-    @Operation(summary = "test 날짜 검색", description = "usrId, 시작일, 종료일을 주면 해당 유저의 test 플레이 결과 제공")
+    @Operation(summary = "test 날짜 검색", description = "userId, 시작일, 종료일을 주면 해당 유저의 test 플레이 결과 제공")
     @PostMapping("/betweentest")
-    fun contentShowBetweenByDate(@RequestBody requestBetweenDateDTO: RequestBetweenDateDTO) : ResponseEntity<MutableList<TestResultDTO>>{
-        val result = webContentService.testDateShowBetweenDate(requestBetweenDateDTO)
+    fun testShowBetweenByDate(@RequestBody requestTestBetweenDateDTO: RequestTestBetweenDateDTO) : ResponseEntity<MutableList<TestResultDTO>>{
+        val result = webContentService.testDateShowBetweenDate(requestTestBetweenDateDTO)
         return ResponseEntity.ok().body(result)
+    }
+
+    @Operation(summary = "content 날짜 검색", description = "시작일, 종료일, content이름, 기관 아이디를 주면 해당 유저의 content 플레이 결과 제공")
+    @PostMapping("/betweencontent")
+    fun contentShowBetweenByDate(@RequestBody requestContentBetweenDateDTO: RequestContentBetweenDateDTO) : ResponseEntity<MutableList<ContentResultDTO>>{
+        val result = webContentService.contentDateShowBetweenDate(requestContentBetweenDateDTO)
+        return ResponseEntity.ok().body(result)
+    }
+
+    @Operation(summary = "content 전체", description = "userId를 주면 해당 유저의 content 플레이 결과 전체 제공")
+    @GetMapping("/summarycontentall")
+    fun allContentShowOrderByDate(httpServletRequest: HttpServletRequest) : ResponseEntity<MutableList<ContentResultDTO>>{
+        val result = jwtTokenCheck.tokenCheck(httpServletRequest)
+
+        if(result?.get(0) != "Manager"){
+            return ResponseEntity.badRequest().body(null)
+        }
+
+        return ResponseEntity.ok().body(webContentService.allContentData(result[1]))
     }
 
 

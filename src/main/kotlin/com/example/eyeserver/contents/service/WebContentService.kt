@@ -95,11 +95,11 @@ class WebContentService(
         return result
     }
 
-    fun testDateShowBetweenDate(requestBetweenDateDTO: RequestBetweenDateDTO) : MutableList<TestResultDTO>{
+    fun testDateShowBetweenDate(requestTestBetweenDateDTO: RequestTestBetweenDateDTO) : MutableList<TestResultDTO>{
         val result = userTestRepository.findByUserIdAndDateBetweenOrderByDateDesc(
-            requestBetweenDateDTO.userId,
-            LocalDate.parse(requestBetweenDateDTO.startDate),
-            LocalDate.parse(requestBetweenDateDTO.endDate),
+            requestTestBetweenDateDTO.userId,
+            LocalDate.parse(requestTestBetweenDateDTO.startDate),
+            LocalDate.parse(requestTestBetweenDateDTO.endDate),
         )
 
         val data = mutableListOf<TestResultDTO>()
@@ -120,6 +120,48 @@ class WebContentService(
         return data
     }
 
+    fun contentDateShowBetweenDate(requestContentBetweenDateDTO: RequestContentBetweenDateDTO) : MutableList<ContentResultDTO>{
+        val result = userContentsRepository.getContentPlay(
+            requestContentBetweenDateDTO.agencyId,
+            requestContentBetweenDateDTO.contentName,
+            LocalDate.parse(requestContentBetweenDateDTO.startDate),
+            LocalDate.parse(requestContentBetweenDateDTO.endDate),
+        )
 
+        val data = mutableListOf<ContentResultDTO>()
+        for (d in result){
+            for(a in d){
+                data.add(
+                    ContentResultDTO(
+                        userId= a.userId,
+                        date = a.date,
+                        contentName = a.contentName,
+                        score = a.score,
+                    )
+                )
+            }
+
+        }
+        return data
+    }
+
+
+    fun allContentData(agencyId : String) : MutableList<ContentResultDTO>{
+        val result = mutableListOf<ContentResultDTO>()
+        val users = agencyRepository.findByAgencyId(agencyId).users
+        for (user in users){
+            val userContents = user.contentsResult
+            for (content in userContents){
+                result.add(ContentResultDTO(
+                    userId = content.userId,
+                    date = content.date,
+                    contentName = content.contentName,
+                    score = content.score,
+
+                ))
+            }
+        }
+        return result
+    }
 
 }
