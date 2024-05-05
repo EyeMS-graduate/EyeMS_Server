@@ -7,11 +7,7 @@ import com.example.eyeserver.contents.service.UserEyeService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 
 @Tag(name = "python에서 사용되는 API",
@@ -23,7 +19,7 @@ class UserEyeController(
 ) {
     @Operation(summary = "test 결과 저장", description = "이미지 정보 및 유저 정보를 3개 저장함")
     @PostMapping("/save")
-    fun saveImage(requestUserEyeImageDTO: RequestUserEyeImageDTO) : ResponseEntity<ResponseUserContentDTO>{
+    fun saveImage(@RequestBody requestUserEyeImageDTO: RequestUserEyeImageDTO) : ResponseEntity<ResponseUserContentDTO>{
         return ResponseEntity.ok().body(userEyeService.saveUserImage(requestUserEyeImageDTO))
     }
 
