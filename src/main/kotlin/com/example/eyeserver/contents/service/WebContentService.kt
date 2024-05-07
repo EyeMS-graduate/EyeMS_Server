@@ -64,13 +64,13 @@ class WebContentService(
 
     fun latestTestALlAverage(userId: String) : ResponseLatestTestDTO {
         val avgResult = userTestRepository.findAllAverage(userId)
-        val now = listOf<Double>(avgResult[0][0],avgResult[0][1],avgResult[0][2],avgResult[0][3],avgResult[0][4],avgResult[0][5])
+        val latest = listOf<Double>(avgResult[0][0],avgResult[0][1],avgResult[0][2],avgResult[0][3],avgResult[0][4],avgResult[0][5])
         return try{
             val result = userTestRepository.findTopByUserIdOrderByDateDesc(userId)
-            val latest = listOf<Double>(result.accurate, result.fixCount, result.questionTime, result.regression, result.saccade, result.totalReadTime)
+            val now = listOf<Double>(result.accurate, result.fixCount, result.questionTime, result.regression, result.saccade, result.totalReadTime)
             ResponseLatestTestDTO(latest, now)
         } catch (e : EmptyResultDataAccessException){
-            ResponseLatestTestDTO(now, listOf(0.0,0.0,0.0,0.0,0.0,0.0))
+            ResponseLatestTestDTO(latest, listOf(0.0,0.0,0.0,0.0,0.0,0.0))
         }
     }
 
