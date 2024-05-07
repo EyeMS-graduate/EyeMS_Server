@@ -97,6 +97,11 @@ class UnityContentService (
         return ResponseDateWithCountDTO(date, count)
     }
 
+    fun getRoomId(userId: String) : String{
+        val result  = userRepository.findByUserId(userId).agency.room
+        return result.toString()
+    }
+
 
 
 

@@ -13,89 +13,125 @@ import java.time.LocalDate
 class WebContentService(
     val userContentsRepository: UserContentsRepository,
     val userTestRepository: UserTestRepository,
-    val agencyRepository : AgencyRepository,
+    val agencyRepository: AgencyRepository,
 ) {
-    fun dateShowOrderByDate(userId : String) : MutableList<ContentResultDTO>{
+    fun dateShowOrderByDate(userId: String): MutableList<ContentResultDTO> {
         val result = userContentsRepository.findTop5ByUserIdOrderByDateDesc(userId)
 
         val data = mutableListOf<ContentResultDTO>()
-        for (d in result){
+        for (d in result) {
             data.add(
                 ContentResultDTO(
-                    userId= d.userId,
+                    userId = d.userId,
                     contentName = d.contentName,
                     score = d.score,
                     date = d.date,
-            )
+                )
             )
         }
         return data
     }
 
-    fun contentCounter(userId : String) : ResponseContentCountDTO {
-        val content1 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content1,userId)
-        val content2 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content2,userId)
-        val content3 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content3,userId)
-        val content4 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content4,userId)
-        val content5 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content5,userId)
-        val content6 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content6,userId)
+    fun contentCounter(userId: String): ResponseContentCountDTO {
+        val content1 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content1, userId)
+        val content2 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content2, userId)
+        val content3 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content3, userId)
+        val content4 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content4, userId)
+        val content5 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content5, userId)
+        val content6 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content6, userId)
 
-        return ResponseContentCountDTO(content1, content2 , content3, content4, content5, content6)
+        return ResponseContentCountDTO(content1, content2, content3, content4, content5, content6)
     }
 
-    fun latestAverage(userId : String) : ResponseLatestContentDTO {
+    fun latestContentAverage(userId: String): ResponseLatestContentDTO {
         val now = mutableListOf<Double>()
         val latest = mutableListOf<Double>()
-        try{
-            for (i in UserContents.ContentsName.values()){
-                latest.add(userContentsRepository.findAverage(userId, i))
+        for (i in UserContents.ContentsName.values()) {
+            try {
                 now.add(userContentsRepository.findTopByUserIdAndContentNameOrderByDateDesc(userId, i).score)
-            }
-        }
-        catch (e : EmptyResultDataAccessException){
-            for (i in UserContents.ContentsName.values()){
-                latest.add(0.0)
+                latest.add(userContentsRepository.findAverage(userId, i))
+            } catch (e: EmptyResultDataAccessException) {
                 now.add(0.0)
+                latest.add(0.0)
+
             }
         }
+
+
 
         return ResponseLatestContentDTO(latest, now)
     }
 
-    fun latestTestALlAverage(userId: String) : ResponseLatestTestDTO {
+    fun latestTestALlAverage(userId: String): ResponseLatestTestDTO {
         val avgResult = userTestRepository.findAllAverage(userId)
-        val latest = listOf<Double>(avgResult[0][0],avgResult[0][1],avgResult[0][2],avgResult[0][3],avgResult[0][4],avgResult[0][5])
-        return try{
+        val latest = listOf<Double>(
+            avgResult[0][0],
+            avgResult[0][1],
+            avgResult[0][2],
+            avgResult[0][3],
+            avgResult[0][4],
+            avgResult[0][5]
+        )
+        return try {
             val result = userTestRepository.findTopByUserIdOrderByDateDesc(userId)
-            val now = listOf<Double>(result.accurate, result.fixCount, result.questionTime, result.regression, result.saccade, result.totalReadTime)
+            val now = listOf<Double>(
+                result.accurate,
+                result.fixCount,
+                result.questionTime,
+                result.regression,
+                result.saccade,
+                result.totalReadTime
+            )
             ResponseLatestTestDTO(latest, now)
-        } catch (e : EmptyResultDataAccessException){
-            ResponseLatestTestDTO(latest, listOf(0.0,0.0,0.0,0.0,0.0,0.0))
+        } catch (e: EmptyResultDataAccessException) {
+            ResponseLatestTestDTO(latest, listOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0))
         }
     }
 
-    fun testDataOrderByDate(userId: String) : MutableList<TestResultDTO> {
+    fun testDataOrderByDate(userId: String): MutableList<TestResultDTO> {
         val result = userTestRepository.findTop5ByUserIdOrderByDateDesc(userId)
         val data = mutableListOf<TestResultDTO>()
-        for (i in result){
-            data.add(TestResultDTO(i.userId, i.fixCount, i.saccade, i.totalReadTime, i.accurate, i.regression, i.questionTime, i.date))
+        for (i in result) {
+            data.add(
+                TestResultDTO(
+                    i.userId,
+                    i.fixCount,
+                    i.saccade,
+                    i.totalReadTime,
+                    i.accurate,
+                    i.regression,
+                    i.questionTime,
+                    i.date
+                )
+            )
         }
         return data
     }
 
-    fun allTestData(agencyId : String) : MutableList<TestResultDTO>{
+    fun allTestData(agencyId: String): MutableList<TestResultDTO> {
         val result = mutableListOf<TestResultDTO>()
         val users = agencyRepository.findByAgencyId(agencyId).users
-        for (user in users){
+        for (user in users) {
             val userContents = user.contentsTest
-            for (content in userContents){
-                result.add(TestResultDTO(content.userId,content.fixCount,content.saccade,content.totalReadTime,content.accurate,content.regression,content.questionTime,content.date))
+            for (content in userContents) {
+                result.add(
+                    TestResultDTO(
+                        content.userId,
+                        content.fixCount,
+                        content.saccade,
+                        content.totalReadTime,
+                        content.accurate,
+                        content.regression,
+                        content.questionTime,
+                        content.date
+                    )
+                )
             }
         }
         return result
     }
 
-    fun testDateShowBetweenDate(requestTestBetweenDateDTO: RequestTestBetweenDateDTO) : MutableList<TestResultDTO>{
+    fun testDateShowBetweenDate(requestTestBetweenDateDTO: RequestTestBetweenDateDTO): MutableList<TestResultDTO> {
         val result = userTestRepository.findByUserIdAndDateBetweenOrderByDateDesc(
             requestTestBetweenDateDTO.userId,
             LocalDate.parse(requestTestBetweenDateDTO.startDate),
@@ -103,11 +139,11 @@ class WebContentService(
         )
 
         val data = mutableListOf<TestResultDTO>()
-        for (d in result){
+        for (d in result) {
             data.add(
                 TestResultDTO(
-                    userId= d.userId,
-                    fixCount= d.fixCount,
+                    userId = d.userId,
+                    fixCount = d.fixCount,
                     date = d.date,
                     saccade = d.saccade,
                     totalReadTime = d.totalReadTime,
@@ -120,7 +156,7 @@ class WebContentService(
         return data
     }
 
-    fun contentDateShowBetweenDate(requestContentBetweenDateDTO: RequestContentBetweenDateDTO) : MutableList<ContentResultDTO>{
+    fun contentDateShowBetweenDate(requestContentBetweenDateDTO: RequestContentBetweenDateDTO): MutableList<ContentResultDTO> {
         val result = userContentsRepository.getContentPlay(
             requestContentBetweenDateDTO.agencyId,
             requestContentBetweenDateDTO.contentName,
@@ -129,11 +165,11 @@ class WebContentService(
         )
 
         val data = mutableListOf<ContentResultDTO>()
-        for (d in result){
-            for(a in d){
+        for (d in result) {
+            for (a in d) {
                 data.add(
                     ContentResultDTO(
-                        userId= a.userId,
+                        userId = a.userId,
                         date = a.date,
                         contentName = a.contentName,
                         score = a.score,
@@ -146,19 +182,21 @@ class WebContentService(
     }
 
 
-    fun allContentData(agencyId : String) : MutableList<ContentResultDTO>{
+    fun allContentData(agencyId: String): MutableList<ContentResultDTO> {
         val result = mutableListOf<ContentResultDTO>()
         val users = agencyRepository.findByAgencyId(agencyId).users
-        for (user in users){
+        for (user in users) {
             val userContents = user.contentsResult
-            for (content in userContents){
-                result.add(ContentResultDTO(
-                    userId = content.userId,
-                    date = content.date,
-                    contentName = content.contentName,
-                    score = content.score,
+            for (content in userContents) {
+                result.add(
+                    ContentResultDTO(
+                        userId = content.userId,
+                        date = content.date,
+                        contentName = content.contentName,
+                        score = content.score,
 
-                ))
+                        )
+                )
             }
         }
         return result

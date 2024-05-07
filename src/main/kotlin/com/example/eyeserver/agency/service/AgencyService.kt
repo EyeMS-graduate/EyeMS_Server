@@ -27,7 +27,6 @@ class AgencyService(
         val user = userRepository.findByAgencyId(agencySignInDTO.agencyId)
 
         if(!passwordEncoder.matches(agencySignInDTO.password, user.password)){
-            print("비밀번호 불일치")
 
             return TokenAndRoomResponseDTO(
                 token = "",

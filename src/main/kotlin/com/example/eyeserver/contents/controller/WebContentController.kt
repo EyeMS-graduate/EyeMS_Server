@@ -42,7 +42,7 @@ class WebContentController (
     @Operation(summary = "최근 content 평균지표", description = "userId를 주면 해당 유저의 content 플레이 결과 평균 지표 제공")
     @GetMapping("/latestcontent/{userId}")
     fun latestAverageContent(@PathVariable userId : String) : ResponseEntity<ResponseLatestContentDTO>{
-        val result = webContentService.latestAverage(userId)
+        val result = webContentService.latestContentAverage(userId)
         return ResponseEntity.ok().body(result)
     }
 

@@ -37,7 +37,6 @@ class UserService(
         userRepository.save(Users(
             userId = signUpUserDTO.userId,
             password = passwordEncoder.encode(signUpUserDTO.password),
-            status = null,
             name = signUpUserDTO.name,
             agencyName = agencyName,
             birth = signUpUserDTO.birth,

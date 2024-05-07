@@ -14,7 +14,6 @@ data class Users (
     val userId: String,
 
     var password: String,
-    var status : String?,
     var name: String,
 
     @Column(name = "agency_name")

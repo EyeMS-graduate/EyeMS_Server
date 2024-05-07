@@ -40,4 +40,11 @@ class UnityController (
         val result = unityContentService.getAllDateUserContentCount(userId)
         return ResponseEntity.ok().body(result)
     }
+    @Operation(summary = "유저 관련 관리자 방 번호 체크", description = "유저 id 를 받을 시 해당 유저의 연관된 기관의 방 번호 제공")
+    @GetMapping("roomId/{userId}")
+    fun getRoomId(@PathVariable userId: String) : ResponseEntity<String> {
+        val result = unityContentService.getRoomId(userId)
+        return ResponseEntity.ok().body(result)
+    }
+
 }
