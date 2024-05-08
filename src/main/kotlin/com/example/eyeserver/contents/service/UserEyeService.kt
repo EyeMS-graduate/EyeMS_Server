@@ -8,8 +8,9 @@ import com.example.eyeserver.contents.dto.unitydto.ResponseUserContentDTO
 import com.example.eyeserver.contents.repository.UserEyeImageRepository
 import com.example.eyeserver.contents.repository.UserTestRepository
 import org.springframework.stereotype.Service
+import java.text.DecimalFormat
 import java.time.LocalDate
-import kotlin.reflect.jvm.internal.impl.resolve.constants.DoubleValue
+
 
 @Service
 class UserEyeService (
@@ -33,14 +34,23 @@ class UserEyeService (
                 date = LocalDate.now().toString(),
             ))
         }
+        val df = DecimalFormat("#.##")
+        val fixCount = df.format(requestUserEyeImageDTO.fixCount.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
+        val saccade = df.format(requestUserEyeImageDTO.saccade.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
+        val accurate = df.format(requestUserEyeImageDTO.accurate.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
+        val totalReadTime = df.format(requestUserEyeImageDTO.totalReadTime.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
+        val regression = df.format(requestUserEyeImageDTO.regression.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
+        val questionTime = df.format(requestUserEyeImageDTO.questionTime.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
+
+
             userTestRepository.save(UserTest(
                 userId = requestUserEyeImageDTO.userId,
-                fixCount = requestUserEyeImageDTO.fixCount.stream().mapToDouble(Double::toDouble).average().asDouble,
-                saccade = requestUserEyeImageDTO.saccade.stream().mapToDouble(Double::toDouble).average().asDouble,
-                accurate = requestUserEyeImageDTO.saccade.stream().mapToDouble(Double::toDouble).average().asDouble,
-                totalReadTime = requestUserEyeImageDTO.saccade.stream().mapToDouble(Double::toDouble).average().asDouble,
-                regression = requestUserEyeImageDTO.saccade.stream().mapToDouble(Double::toDouble).average().asDouble,
-                questionTime = requestUserEyeImageDTO.saccade.stream().mapToDouble(Double::toDouble).average().asDouble,
+                fixCount = fixCount,
+                saccade = saccade,
+                accurate = accurate,
+                totalReadTime = totalReadTime,
+                regression = regression,
+                questionTime = questionTime,
                 date = LocalDate.now(),
             ))
 
