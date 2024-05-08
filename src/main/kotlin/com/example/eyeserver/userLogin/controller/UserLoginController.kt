@@ -42,7 +42,7 @@ class UserLoginController (
 
     @Operation(summary = "Unity info update", description = "Unity 첫 정보수정 API")
     @PostMapping("/unityupdate")
-    fun userUnityUpdate(unityUserInfoDTO: UnityUserInfoDTO) : ResponseEntity<Boolean> {
+    fun userUnityUpdate(@RequestBody unityUserInfoDTO: UnityUserInfoDTO) : ResponseEntity<Boolean> {
         val result = userService.unityUserUpdate(unityUserInfoDTO)
         return ResponseEntity.ok(result)
     }
