@@ -21,4 +21,5 @@ interface UserTestRepository : JpaRepository<UserTest, Long> {
 
     fun findByUserIdAndDateBetweenOrderByDateDesc(userId : String, startDate : LocalDate, endDate : LocalDate) : List<UserTest>
 
+    fun existsByUserIdAndDate(userId : String ,date : LocalDate) : Boolean
 }

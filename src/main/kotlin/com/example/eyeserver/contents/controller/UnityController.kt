@@ -47,4 +47,10 @@ class UnityController (
         return ResponseEntity.ok().body(result)
     }
 
+    @GetMapping("/check/{userId}")
+    fun playToday(@PathVariable userId: String) : ResponseEntity<Boolean> {
+        val result = unityContentService.isCheck(userId)
+        return ResponseEntity.ok().body(result)
+    }
+
 }

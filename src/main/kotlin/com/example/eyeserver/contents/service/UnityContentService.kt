@@ -12,66 +12,83 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 @Service
-class UnityContentService (
+class UnityContentService(
     val userContentsRepository: UserContentsRepository,
     val userRepository: UserRepository,
     val userTestRepository: UserTestRepository,
-){
-    fun saveUserContentScore(requestUserContentDTO: RequestUserContentDTO) : ResponseUserContentDTO {
-        val user : Users = userRepository.findByUserId(requestUserContentDTO.userId)
-        userContentsRepository.save(UserContents(
-            userId = requestUserContentDTO.userId,
-            contentName = requestUserContentDTO.contentName,
-            date = LocalDate.now(),
-            score = requestUserContentDTO.score,
-            user = user,
-            id = null,
-            originScore = requestUserContentDTO.originScore,
-        ))
+) {
+    fun saveUserContentScore(requestUserContentDTO: RequestUserContentDTO): ResponseUserContentDTO {
+        val user: Users = userRepository.findByUserId(requestUserContentDTO.userId)
+        userContentsRepository.save(
+            UserContents(
+                userId = requestUserContentDTO.userId,
+                contentName = requestUserContentDTO.contentName,
+                date = LocalDate.now(),
+                score = requestUserContentDTO.score,
+                user = user,
+                id = null,
+                originScore = requestUserContentDTO.originScore,
+            )
+        )
         return ResponseUserContentDTO(
             success = true,
             message = "good",
         )
     }
 
-    fun getUserContentSummary(userId : String) : ResponseSummaryContentDTO{
+    fun getUserContentSummary(userId: String): ResponseSummaryContentDTO {
         val now = mutableListOf<Double>()
         val latest = mutableListOf<Double>()
         val originLatest = mutableListOf<Double>()
-        try{
-            for (i in UserContents.ContentsName.values()){
-                val result = userContentsRepository.findOriginAverage(userId, i);
-                latest.add(result[0][0])
-                originLatest.add(result[0][1])
-                now.add(userContentsRepository.findTopByUserIdAndContentNameOrderByDateDesc(userId, i).score)
-            }
-        }
-        catch (e : EmptyResultDataAccessException){
-            for (i in UserContents.ContentsName.values()){
+
+        for (i in UserContents.ContentsName.values()) {
+
+            val result = userContentsRepository.findOriginAverage(userId, i);
+            if (result[0][0] == null) {
                 latest.add(0.0)
                 now.add(0.0)
                 originLatest.add(0.0)
-
+                continue
             }
+            latest.add(result[0][0])
+            originLatest.add(result[0][1])
+            now.add(userContentsRepository.findTopByUserIdAndContentNameOrderByDateDesc(userId, i).score)
+
         }
+
+
 
         return ResponseSummaryContentDTO(latest, originLatest, now)
     }
 
-    fun getUserTestSummary(userId: String) :ResponseSummaryTestDTO{
+    fun getUserTestSummary(userId: String): ResponseSummaryTestDTO {
         val avgResult = userTestRepository.findAllAverage(userId)
-        val latest = listOf<Double>(avgResult[0][0],avgResult[0][1],avgResult[0][2],avgResult[0][3],avgResult[0][4],avgResult[0][5])
-        return try{
+        val latest = listOf<Double>(
+            avgResult[0][0],
+            avgResult[0][1],
+            avgResult[0][2],
+            avgResult[0][3],
+            avgResult[0][4],
+            avgResult[0][5]
+        )
+        return try {
             val result = userTestRepository.findTopByUserIdOrderByDateDesc(userId)
-            val now = listOf<Double>(result.accurate, result.fixCount, result.questionTime, result.regression, result.saccade, result.totalReadTime)
+            val now = listOf<Double>(
+                result.accurate,
+                result.fixCount,
+                result.questionTime,
+                result.regression,
+                result.saccade,
+                result.totalReadTime
+            )
             val nowDate = result.date
             ResponseSummaryTestDTO(latest, now, nowDate.toString())
-        } catch (e : EmptyResultDataAccessException){
+        } catch (e: EmptyResultDataAccessException) {
             ResponseSummaryTestDTO(latest, listOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0), "nothing")
         }
     }
 
-    fun getAllDateUserContentCount(userId: String) : ResponseDateWithCountDTO{
+    fun getAllDateUserContentCount(userId: String): ResponseDateWithCountDTO {
         val yearMonth = YearMonth.of(LocalDate.now().year, LocalDate.now().month)
         val lastDayOfMonth = yearMonth.lengthOfMonth()
 
@@ -85,8 +102,7 @@ class UnityContentService (
             try {
                 val result = userContentsRepository.countByDateAndUserId(currentDate, userId)
                 count.add(result)
-            }
-            catch (e : Exception){
+            } catch (e: Exception) {
                 count.add(0)
             }
             date.add(currentDate)
@@ -97,12 +113,12 @@ class UnityContentService (
         return ResponseDateWithCountDTO(date, count)
     }
 
-    fun getRoomId(userId: String) : String{
-        val result  = userRepository.findByUserId(userId).agency.room
+    fun getRoomId(userId: String): String {
+        val result = userRepository.findByUserId(userId).agency.room
         return result.toString()
     }
 
-
+    fun isCheck(userId: String) = userTestRepository.existsByUserIdAndDate(userId, LocalDate.now())
 
 
 }
