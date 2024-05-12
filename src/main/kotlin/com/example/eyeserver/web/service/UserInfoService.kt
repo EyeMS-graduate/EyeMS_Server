@@ -42,7 +42,7 @@ class UserInfoService (
             gender = "male"
         }
         if(userInfo.glasses){
-            glasses = "ok"
+            glasses = "yes"
         }
         return UserInfoDTO(
             userId = userInfo.userId,
@@ -69,7 +69,7 @@ class UserInfoService (
         if(userInfoDTO.gender == "male"){
             gender = true
         }
-        if(userInfoDTO.glasses == "ok"){
+        if(userInfoDTO.glasses == "yes"){
             glasses = true
         }
         userInfo.password = passwordEncoder.encode(userInfoDTO.password)
