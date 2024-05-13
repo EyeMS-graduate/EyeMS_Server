@@ -10,4 +10,6 @@ interface UserEyeImageRepository : MongoRepository< UserEyeImage,Long>{
 
     fun findByUserIdAndDateOrderByImageNum(userId : String, date : String) : List<UserEyeImage>
     fun deleteByUserId(userId: String)
+
+    fun findTop3ByUserIdOrderByDate(userId: String) : List<UserEyeImage>
 }

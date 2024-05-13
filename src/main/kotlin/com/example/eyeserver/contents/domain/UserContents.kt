@@ -36,11 +36,11 @@ data class UserContents(
 ) {
 
     enum class ContentsName{
-        Content1,
-        Content2,
-        Content3,
-        Content4,
-        Content5,
-        Content6,
+        글자기억하기,
+        과일색맞추기,
+        토끼를찾아라,
+        동물찾기,
+        돌고래를잡아라,
+        관찰카메라,
     }
 }

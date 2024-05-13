@@ -34,7 +34,7 @@ class UserEyeService (
                 date = LocalDate.now().toString(),
             ))
         }
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat("#.#")
         val fixCount = df.format(requestUserEyeImageDTO.fixCount.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
         val saccade = df.format(requestUserEyeImageDTO.saccade.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()
         val accurate = df.format(requestUserEyeImageDTO.accurate.stream().mapToDouble(Double::toDouble).average().asDouble).toDouble()

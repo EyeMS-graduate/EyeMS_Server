@@ -33,12 +33,12 @@ class WebContentService(
     }
 
     fun contentCounter(userId: String): ResponseContentCountDTO {
-        val content1 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content1, userId)
-        val content2 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content2, userId)
-        val content3 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content3, userId)
-        val content4 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content4, userId)
-        val content5 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content5, userId)
-        val content6 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.Content6, userId)
+        val content1 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.글자기억하기, userId)
+        val content2 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.과일색맞추기, userId)
+        val content3 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.토끼를찾아라, userId)
+        val content4 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.동물찾기, userId)
+        val content5 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.돌고래를잡아라, userId)
+        val content6 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.관찰카메라, userId)
 
         return ResponseContentCountDTO(content1, content2, content3, content4, content5, content6)
     }

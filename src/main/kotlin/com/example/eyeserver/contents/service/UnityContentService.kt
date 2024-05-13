@@ -3,6 +3,7 @@ package com.example.eyeserver.contents.service
 import com.example.eyeserver.contents.domain.UserContents
 import com.example.eyeserver.contents.dto.unitydto.*
 import com.example.eyeserver.contents.repository.UserContentsRepository
+import com.example.eyeserver.contents.repository.UserEyeImageRepository
 import com.example.eyeserver.contents.repository.UserTestRepository
 import com.example.eyeserver.userLogin.domain.Users
 import com.example.eyeserver.userLogin.repository.UserRepository
@@ -16,6 +17,7 @@ class UnityContentService(
     val userContentsRepository: UserContentsRepository,
     val userRepository: UserRepository,
     val userTestRepository: UserTestRepository,
+    val userEyeImageRepository: UserEyeImageRepository,
 ) {
     fun saveUserContentScore(requestUserContentDTO: RequestUserContentDTO): ResponseUserContentDTO {
         val user: Users = userRepository.findByUserId(requestUserContentDTO.userId)
@@ -63,6 +65,13 @@ class UnityContentService(
 
     fun getUserTestSummary(userId: String): ResponseSummaryTestDTO {
         val avgResult = userTestRepository.findAllAverage(userId)
+        val avgDyslexiaScore = userEyeImageRepository.findTop3ByUserIdOrderByDate(userId)
+        val dyslexiaScores = listOf<Int>(
+            avgDyslexiaScore[0].dyslexiaScore.toInt(),
+            avgDyslexiaScore[1].dyslexiaScore.toInt(),
+            avgDyslexiaScore[2].dyslexiaScore.toInt(),
+        )
+
         val latest = listOf<Double>(
             avgResult[0][0],
             avgResult[0][1],
@@ -71,6 +80,7 @@ class UnityContentService(
             avgResult[0][4],
             avgResult[0][5]
         )
+
         return try {
             val result = userTestRepository.findTopByUserIdOrderByDateDesc(userId)
             val now = listOf<Double>(
@@ -82,9 +92,9 @@ class UnityContentService(
                 result.totalReadTime
             )
             val nowDate = result.date
-            ResponseSummaryTestDTO(latest, now, nowDate.toString())
+            ResponseSummaryTestDTO(latest, now, nowDate.toString(), dyslexiaScores.stream().mapToInt(Int::toInt).average().asDouble.toInt())
         } catch (e: EmptyResultDataAccessException) {
-            ResponseSummaryTestDTO(latest, listOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0), "nothing")
+            ResponseSummaryTestDTO(latest, listOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0), "nothing", 0)
         }
     }
 
