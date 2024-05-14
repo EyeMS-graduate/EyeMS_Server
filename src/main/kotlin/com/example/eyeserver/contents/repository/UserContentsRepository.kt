@@ -29,4 +29,7 @@ interface UserContentsRepository : JpaRepository<UserContents, Long>{
     @Query("select uc from usercontents uc left join uc.user.agency ua where ua.agencyId =:agencyId and uc.contentName = :contentName and uc.date between :startDate and :endDate")
     fun getContentPlay(@Param(value = "agencyId")agencyId : String ,@Param(value = "contentName")contentName : UserContents.ContentsName, @Param(value = "startDate")startDate : LocalDate, @Param(value = "endDate")endDate : LocalDate) : List<Array<UserContents>>
 
+
+    @Query("select uc from usercontents uc left join uc.user.agency ua where ua.agencyId =:agencyId order by uc.date desc")
+    fun findAllUserContentPlay(@Param(value = "agencyId")agencyId : String) : List<Array<UserContents>>
 }

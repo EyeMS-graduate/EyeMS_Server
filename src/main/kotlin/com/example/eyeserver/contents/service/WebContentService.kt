@@ -110,10 +110,9 @@ class WebContentService(
 
     fun allTestData(agencyId: String): MutableList<TestResultDTO> {
         val result = mutableListOf<TestResultDTO>()
-        val users = agencyRepository.findByAgencyId(agencyId).users
-        for (user in users) {
-            val userContents = user.contentsTest
-            for (content in userContents) {
+        val tests = userTestRepository.findAllUserTestPlay(agencyId)
+        for (user in tests) {
+            for (content in user) {
                 result.add(
                     TestResultDTO(
                         content.userId,
@@ -184,16 +183,15 @@ class WebContentService(
 
     fun allContentData(agencyId: String): MutableList<ContentResultDTO> {
         val result = mutableListOf<ContentResultDTO>()
-        val users = agencyRepository.findByAgencyId(agencyId).users
-        for (user in users) {
-            val userContents = user.contentsResult
-            for (content in userContents) {
+        val data = userContentsRepository.findAllUserContentPlay(agencyId);
+        for(d in data){
+            for( a in d){
                 result.add(
                     ContentResultDTO(
-                        userId = content.userId,
-                        date = content.date,
-                        contentName = content.contentName,
-                        score = content.score,
+                        userId = a.userId,
+                        date = a.date,
+                        contentName = a.contentName,
+                        score = a.score,
 
                         )
                 )

@@ -7,6 +7,8 @@ import com.example.eyeserver.contents.dto.eyedto.ResponseUserEyeImageDTO
 import com.example.eyeserver.contents.dto.unitydto.ResponseUserContentDTO
 import com.example.eyeserver.contents.repository.UserEyeImageRepository
 import com.example.eyeserver.contents.repository.UserTestRepository
+import com.example.eyeserver.userLogin.domain.Users
+import com.example.eyeserver.userLogin.repository.UserRepository
 import org.springframework.stereotype.Service
 import java.text.DecimalFormat
 import java.time.LocalDate
@@ -16,9 +18,11 @@ import java.time.LocalDate
 class UserEyeService (
     private val userEyeImageRepository: UserEyeImageRepository,
     private val userTestRepository: UserTestRepository,
+    private val userRepository: UserRepository,
 ){
 
     fun saveUserImage(requestUserEyeImageDTO: RequestUserEyeImageDTO) : ResponseUserContentDTO{
+        val user: Users = userRepository.findByUserId(requestUserEyeImageDTO.userId)
         for (i in 0..2){
             userEyeImageRepository.insert(UserEyeImage(
                 userId = requestUserEyeImageDTO.userId,
@@ -52,6 +56,7 @@ class UserEyeService (
                 regression = regression,
                 questionTime = questionTime,
                 date = LocalDate.now(),
+                user = user,
             ))
 
         return ResponseUserContentDTO(true, "good")
