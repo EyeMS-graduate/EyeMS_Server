@@ -26,7 +26,7 @@ interface UserContentsRepository : JpaRepository<UserContents, Long>{
 
     fun countByDateAndUserId(date : LocalDate, userId : String) : Int
 
-    @Query("select uc from usercontents uc left join uc.user.agency ua where ua.agencyId =:agencyId and uc.contentName = :contentName and uc.date between :startDate and :endDate")
+    @Query("select uc from usercontents uc left join uc.user.agency ua where ua.agencyId =:agencyId and uc.contentName = :contentName and uc.date between :startDate and :endDate order by uc.date desc")
     fun getContentPlay(@Param(value = "agencyId")agencyId : String ,@Param(value = "contentName")contentName : UserContents.ContentsName, @Param(value = "startDate")startDate : LocalDate, @Param(value = "endDate")endDate : LocalDate) : List<Array<UserContents>>
 
 
