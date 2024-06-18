@@ -37,8 +37,8 @@ class WebContentService(
         val content2 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.과일색맞추기, userId)
         val content3 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.토끼를찾아라, userId)
         val content4 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.동물찾기, userId)
-        val content5 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.돌고래를잡아라, userId)
-        val content6 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.관찰카메라, userId)
+        val content5 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.물고기사냥, userId)
+        val content6 = userContentsRepository.countByContentNameAndUserId(UserContents.ContentsName.돌고래의모험, userId)
 
         return ResponseContentCountDTO(content1, content2, content3, content4, content5, content6)
     }
